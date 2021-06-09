@@ -1,6 +1,6 @@
 <?php
 function polls(){
-    echo "Poll Question\n";
+    echo "Poll Question1\n";
     echo "Do you like to drink water?\n";
     echo "A: Yes";
     echo "B: No";
