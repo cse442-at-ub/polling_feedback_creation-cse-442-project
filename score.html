@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CSE 442</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="grid">
+            <h3>Do you think Jet fuel can melt steel beams?</h3>
+            <p id = 's'> Seconds left:</p>
+            <p id = "timer"></p>
+            <p id = 'results'>Awaiting results...</p>
+            <div class="scores">
+                <button id="score" value="1" onclick=sendScore(this)>Yes</button>
+                <button id="score" value="2" onclick=sendScore(this)>No</button>
+                <button id="score" value="3" onclick=sendScore(this)>Tentative</button>
+            </div>
+        </div>
+        <script src="main.js" async defer></script>
+    </body>
+</html>
