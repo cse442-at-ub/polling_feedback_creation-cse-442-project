@@ -1,0 +1,12 @@
+#score {
+    padding: 15px;
+}
+
+.question {
+    display:question; 
+    text-align: center;
+}
+
+.active {
+    background-color: #ffffff
+}
