@@ -17,6 +17,7 @@ function polls(){
     else{
         echo "Please choose from A or B";
     }
+    echo "Answer recieved";
 }
 polls();
 ?>
