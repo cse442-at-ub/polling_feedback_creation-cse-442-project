@@ -8,16 +8,18 @@ function polls(){
 
     if($x == "A" || $x == "a"){
         echo "You chose A <br>\n";
+        echo "Answer recieved";
     }
 
     elseif($x == "B" || $x == "b"){
         echo "You chose B <br> \n";
+        echo "Answer recieved";
     }
     
     else{
         echo "Please choose from A or B";
     }
-    echo "Answer recieved";
+    
 }
 polls();
 ?>

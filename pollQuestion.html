@@ -15,10 +15,6 @@
     </div>
     <script>
         function sendScore(current) {
-            var score = document.querySelector('answer')
-            if (score != null) {
-                score.classList.remove('answer');
-            }
             score = current;
             score.classList.add('answer');
             alert("Answer Recieved:" + score.innerHTML);
