@@ -10,12 +10,18 @@
 <body>
     <div class="question">
         <h3>Do you like to drink water?</h3>
-        <button onclick="onClick()"> Yes </button>
-        <button onclick="onClick()"> No </button>
+        <button onclick="sendScore(this)"> Yes </button>
+        <button onclick="sendScore(this)"> No </button>
     </div>
     <script>
-        function onClick(){
-            alert("Answer Recieved");
+        function sendScore(current) {
+            var score = document.querySelector('answer')
+            if (score != null) {
+                score.classList.remove('answer');
+            }
+            score = current;
+            score.classList.add('answer');
+            alert("Answer Recieved:" + score.innerHTML);
         }
     </script>
 </body>
