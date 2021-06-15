@@ -1,7 +1,7 @@
 <?php
 function polls(){
     echo "Poll Question <br> \n";
-    echo "Do you like to drink water? <br>\n";
+    echo "Are you enjoying this project? <br>\n";
     echo "A: Yes<br> \n";
     echo "B: No<br> \n";
     $x = readline("Enter an Input: ");
