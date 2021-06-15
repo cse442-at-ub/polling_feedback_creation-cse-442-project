@@ -1,26 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Poll Question</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="mx-auto" style="width: 50%; text-align: center;">
+                <h1 class="m-3">Are you enjoying this project?</h1>
+                <button type="button" class="btn btn-outline-danger btn-lg m-2" data-bs-toggle="modal" data-bs-target="#lostModal" value="1" onclick=sendScore(this)>Yes</button>
+                <button type="button" class="btn btn-outline-primary btn-lg m-2" data-bs-toggle="modal" data-bs-target="#rightModal" value="2" onclick=sendScore(this)>No</button>
+            <div class="modal fade" id="lostModal" tabindex="-1" aria-labelledby="lostModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="lostModalLabel">Your answer has been received!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+                            <p>Answer Received: <strong>Yes.</strong></p>
+                            <p><small><em>To change your answer, choose another option.</em></small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<head>
-    <meta charset="utf-8">
-    <title>Poll Question</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <div class="question">
-        <h3>Do you like to drink water?</h3>
-        <button onclick="sendScore(this)"> Yes </button>
-        <button onclick="sendScore(this)"> No </button>
-    </div>
-    <script>
-        function sendScore(current) {
-            score = current;
-            score.classList.add('answer');
-            alert("Answer Recieved:" + score.innerHTML);
-        }
-    </script>
-</body>
-
-
+            <div class="modal fade" id="rightModal" tabindex="-1" aria-labelledby="rightModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="rightModalLabel">Your answer has been received!</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+                            <p>Your answer has been received! <strong>No.</strong></p>
+                            <p><small><em>To change your answer, choose another option.</em></small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="main.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    </body>
 </html>
