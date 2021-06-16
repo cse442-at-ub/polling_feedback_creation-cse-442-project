@@ -14,7 +14,7 @@
                 echo "<h1 class='m-3'>Questions and Answers Recieved!</h1>";
 
                 $question = $_REQUEST['question'];
-                $answer = $_REQUEST['answers'];
+                $answers = $_REQUEST['answers'];
 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
@@ -25,7 +25,9 @@
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
-
+            
+                $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
+                $conn->query($sql);
                 // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
                 $sql = "SELECT * FROM pollquestions";
                 // $sql = "SELECT * FROM pollquestions WHERE question= '$question'";
@@ -34,12 +36,14 @@
 
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<h4 class='m-3'>" . $row["question"] . "</h4>" . "\n";
-                        echo "<h5 class='m-3'>" .  $row["question_answer"] . "</h5>" . "\n";
+                        echo "<h4 class='m-3'>" . "Question: ". $row["question"] . "</h4>" . "\n";
+                        echo "<h5 class='m-3'>" . "Answers: " . $row["question_answer"] . "</h5>" . "\n";
                       }
                 } else {
                     echo "<h4 class='m-3'>There are no questions.</h4> \n";
                 }
+
+                // header("Location: pollQuestion.html");
             ?>
         </div>
     </body>
