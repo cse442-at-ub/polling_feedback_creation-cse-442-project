@@ -11,7 +11,7 @@
     <body>
         <div class="mx-auto" style="text-align: left;">
             <?php
-                echo "<h1 class='m-3'>Questions</h1>";
+                echo "<h1 class='m-3'>Questions and Answers Recieved!</h1>";
 
                 $question = $_REQUEST['question'];
                 $answer = $_REQUEST['answer'];
