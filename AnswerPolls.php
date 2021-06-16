@@ -15,7 +15,7 @@
 
                 $question = $_REQUEST['question'];
                 $answers = $_REQUEST['answer'];
-                $answers2 = $_REQUEST['answer'];
+                $answers2 = $_REQUEST['extraAnswer'];
 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
@@ -34,7 +34,8 @@
                 //     echo "<h4 class='m-3'>" . "NOT FUCKING WORKING" . "</h4>" . "\n";
                 // }
 
-                $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
+                // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
+                $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers) VALUES ('$question', '$answers', '$answers2')";
                 $conn->query($sql);
                 
                 // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
@@ -47,6 +48,11 @@
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Question: ". $row["question"] . "</h4>" . "\n";
                         echo "<h5 class='m-3'>" . "Answers: " . $row["question_answer"] . "</h5>" . "\n";
+                        if(!empty($row["question_extra_answers"])){
+                            echo "<h5 class='m-3'>" . "Answers2: " . $row["question_extra_answers"] . "</h5>";
+                        }else{
+                            echo "\n";
+                        }
                       }
                 } else {
                     echo "<h4 class='m-3'>There are no questions.</h4> \n";
