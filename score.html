@@ -10,64 +10,11 @@
     </head>
     <body>
         <div class="mx-auto" style="width: 50%; text-align: center;">
-                <h1 class="m-3">How are you understanding the material?</h1>
-                <button type="button" class="btn btn-outline-danger btn-lg m-2" data-bs-toggle="modal" data-bs-target="#lostModal" value="1" onclick=sendScore(this)>I'm lost.</button>
-                <button type="button" class="btn btn-outline-primary btn-lg m-2" data-bs-toggle="modal" data-bs-target="#rightModal" value="2" onclick=sendScore(this)>Just right.</button>
-                <button type="button" class="btn btn-outline-success btn-lg m-2" data-bs-toggle="modal" data-bs-target="#easyModal" value="3" onclick=sendScore(this)>This is easy.</button>
-
-            <div class="modal fade" id="lostModal" tabindex="-1" aria-labelledby="lostModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="lostModalLabel">Feedback submitted!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-                            <p>Your feedback has been recorded: <strong>I'm lost.</strong></p>
-                            <p><small><em>You can update your feedback as the class progresses.</em></small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="rightModal" tabindex="-1" aria-labelledby="rightModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="rightModalLabel">Feedback submitted!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-                            <p>Your feedback has been recorded: <strong>Just right.</strong></p>
-                            <p><small><em>You can update your feedback as the class progresses.</em></small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="easyModal" tabindex="-1" aria-labelledby="easyModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="easyModalLabel">Feedback submitted!</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" style="text-align: left;">
-                            <p>Your feedback has been recorded: <strong>This is easy.</strong></p>
-                            <p><small><em>You can update your feedback as the class progresses.</em></small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h1 class="m-3">How are you understanding the material?</h1>
+            <button type="button" class="btn btn-outline-danger btn-lg m-2" data-bs-toggle="modal" data-bs-target="#lostModal" value="1" onclick=sendScore(this)>I'm lost.</button>
+            <button type="button" class="btn btn-outline-primary btn-lg m-2" data-bs-toggle="modal" data-bs-target="#rightModal" value="2" onclick=sendScore(this)>Just right.</button>
+            <button type="button" class="btn btn-outline-success btn-lg m-2" data-bs-toggle="modal" data-bs-target="#easyModal" value="3" onclick=sendScore(this)>This is easy.</button>
+            <h4 id="notification" class="m-3"></h4>
         </div>
 
         <script src="main.js" async defer></script>

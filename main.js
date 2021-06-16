@@ -11,4 +11,6 @@ function sendScore(current) {
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("GET","score.php?score=" + score.value, true);
     xmlhttp.send();
+    // Display notification
+    document.getElementById('notification').innerHTML = "Your feedback has been submitted: " + "<br>" + "<b>" + score.innerHTML + "</b>"
 }
