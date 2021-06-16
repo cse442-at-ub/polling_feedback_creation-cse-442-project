@@ -35,7 +35,7 @@
                         echo "<h4 class='m-3'>" . $row["question_answer"] . "</h4>" . "\n";
                       }
                 } else {
-                    echo "<h4 class='m-3'>There are no questions found.</h4> \n";
+                    echo "<h4 class='m-3'>There are no questions.</h4> \n";
                 }
             ?>
         </div>
