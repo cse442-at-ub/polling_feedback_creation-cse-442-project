@@ -1,13 +1,15 @@
 <?php
 $question = $_GET["question"];
 $answers = $_GET["answers"];
-$answers2 = $_GET["answers"];
-
+// $answers2 = $_GET["answers"];
 
 $dbServerName = "oceanus.cse.buffalo.edu";
 $dbUsername = "kchen223";
 $dbPassword = "50277192";
 $dbName = "kchen223_db";
+
+$testQuestion = "Am I working?";
+$testAnswer = "Working";
 
 $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
 
@@ -16,7 +18,7 @@ if ($conn->connect_error) {
 }
 echo "Connected successfully." . "\n";
 
-$sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers') ON DUPLICATE KEY UPDATE question_answer = '$answers2'";
+$sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$testQuestion', '$testAnswer')";
 // $sql = "SELECT * FROM `pollquestions`";
 
 if ($conn->query($sql) === TRUE) {
