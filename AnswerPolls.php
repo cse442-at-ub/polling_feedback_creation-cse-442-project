@@ -14,7 +14,8 @@
                 echo "<h1 class='m-3'>Questions and Answers Recieved!</h1>";
 
                 $question = $_REQUEST['question'];
-                $answers = $_REQUEST['answers'];
+                $answers = $_REQUEST['answer'];
+                $answers2 = $_REQUEST['answer'];
 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
@@ -25,9 +26,17 @@
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
-            
+                
+                // if(!empty($question) && !empty($answer)){
+                //     $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
+                //     $conn->query($sql);
+                // }else{
+                //     echo "<h4 class='m-3'>" . "NOT FUCKING WORKING" . "</h4>" . "\n";
+                // }
+
                 $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
                 $conn->query($sql);
+                
                 // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
                 $sql = "SELECT * FROM pollquestions";
                 // $sql = "SELECT * FROM pollquestions WHERE question= '$question'";
