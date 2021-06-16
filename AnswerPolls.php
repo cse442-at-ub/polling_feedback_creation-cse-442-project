@@ -1,25 +1,46 @@
-<?php
-function polls(){
-    echo "Poll Question <br> \n";
-    echo "Are you enjoying this project? <br>\n";
-    echo "A: Yes<br> \n";
-    echo "B: No<br> \n";
-    $x = readline("Enter an Input: ");
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Poll Question Submitted</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="mx-auto" style="text-align: left;">
+            <?php
+                echo "<h1 class='m-3'>Questions</h1>";
 
-    if($x == "A" || $x == "a"){
-        echo "You chose A <br>\n";
-        echo "Answer recieved";
-    }
+                $question = $_REQUEST['question'];
+                $answer = $_REQUEST['answer'];
 
-    elseif($x == "B" || $x == "b"){
-        echo "You chose B <br> \n";
-        echo "Answer recieved";
-    }
-    
-    else{
-        echo "Please choose from A or B";
-    }
-    
-}
-polls();
-?>
+                $dbServerName = "oceanus.cse.buffalo.edu";
+                $dbUsername = "kchen223";
+                $dbPassword = "50277192";
+                $dbName = "kchen223_db";
+
+                $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error . "\n");
+                }
+
+                $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
+
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<h4 class='m-3'>" . $row["question_answer"] . "</h4>" . "\n";
+                      }
+                } else {
+                    echo "<h4 class='m-3'>There arew no questions.</h4> \n";
+                }
+            ?>
+        </div>
+    </body>
+</html>
+
+
+
