@@ -41,7 +41,7 @@
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-
+                    echo "<h4 class='m-3'>" . "Question: ". $row["question"] . "</h4>" . "\n";
                     echo '<div class="form-check">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                             <label class="form-check-label" for="exampleRadios1">
