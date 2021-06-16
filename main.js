@@ -13,7 +13,7 @@ function keepHighlighted(current) {
     xmlhttp.send();
 }
 
-//function to add more answer boxes
+//function to add and remove answer boxes
 $(document).ready(function() {
     $(".add-more").click(function(){
         var html = $(".copy").html();
