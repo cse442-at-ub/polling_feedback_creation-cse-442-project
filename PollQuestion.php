@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 echo "Connected successfully." . "\n";
 
 $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$testQuestion', '$testAnswer')";
-// $sql = "SELECT * FROM `pollquestions`";
+
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully. \n";
