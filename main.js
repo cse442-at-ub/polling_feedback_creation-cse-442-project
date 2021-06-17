@@ -7,14 +7,14 @@ function sendScore(current) {
     }
     score = current;
     score.classList.add('active');
-
+    
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("GET","score.php?score=" + score.value, true);
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4) {
             if (xmlhttp.status === 200) {
-                console.log('Request successful');
+                console.log('Request successful.');
                 sendNotification(score.innerHTML);
             } else {
                 console.log('Request failed.');

@@ -9,16 +9,21 @@ $dbName = "kchen223_db";
 $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error . "\n");
+    die("Connection failed: " . $conn->connect_error . "<br>");
 }
-echo "Connected successfully." . "\n";
+echo "Connected to database." . "<br>";
 
-$sql = "INSERT INTO scores (ubit, score) VALUES ('kchen223', $score) ON DUPLICATE KEY UPDATE score = $score";
+if ($score == 1 || $score == 2 || $score == 3) {
+    echo "Valid entry provided: " . $score . "<br>";
+    $sql = "INSERT INTO scores (email, score) VALUES ('kchen223@buffalo.edu', $score) ON DUPLICATE KEY UPDATE score = $score";
 
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully. \n";
+    if ($conn->query($sql) === TRUE) {
+        echo "Feedback successfully recorded." . "<br>";
+    } else {
+        echo "Feedback submission failed. " . "<br>" . "Query: " . $sql . "<br>" . "Error: " . $conn->error . "<br>";
+    }
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error . "\n";
+    echo "Invalid entry provided: " . $score . "<br>";
 }
 
 $conn->close();
