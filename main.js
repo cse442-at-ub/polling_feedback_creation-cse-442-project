@@ -7,6 +7,7 @@ function keepHighlighted(current) {
     }
     score = current;
     score.classList.add('active');
+    document.getElementById('notification').innerHTML = "Your feedback has been submitted: " + "<br>" + "<b>" + score.innerHTML + "</b>"
     // Send poll question to DB
     var xmlhttp=new XMLHttpRequest();
     xmlhttp.open("GET","PollQuestion.php?answers=" + score.value, true);
