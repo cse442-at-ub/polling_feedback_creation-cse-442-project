@@ -16,6 +16,7 @@
                 $question = $_REQUEST['question'];
                 $answers = $_REQUEST['answer'];
                 $answers2 = $_REQUEST['extraAnswer'];
+                $status = "open";
 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
@@ -27,15 +28,15 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                // if(!empty($question) && !empty($answer)){
-                //     $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
+                // if(!empty($question) || !empty($answer)){
+                //     $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers', '$answers2')";
                 //     $conn->query($sql);
                 // }else{
-                //     echo "<h4 class='m-3'>" . "NOT WORKING" . "</h4>" . "\n";
+                //     ;
                 // }
 
                 // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
-                $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers) VALUES ('$question', '$answers', '$answers2')";
+                $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
                 $conn->query($sql);
                 
                 // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
