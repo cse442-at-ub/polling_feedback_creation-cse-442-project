@@ -17,6 +17,9 @@
                 $answers = $_REQUEST['answer'];
                 $answers2 = $_REQUEST['extraAnswer'];
                 $status = "open";
+                
+                $pollAnswer = $_GET["answer"];
+                $pollAnswer2 = $_GET["answer"];
 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
@@ -36,7 +39,11 @@
                 // }
 
                 // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
-                $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
+                if(!empty($question)){
+                    $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
+                }
+                $sql = "INSERT INTO poll (ubit, pollAnswer) VALUES ('kchen223', '$pollAnswer') ON DUPLICATE KEY UPDATE pollAnswer = '$pollAnswer2'";
+
                 $conn->query($sql);
                 
                 // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
@@ -63,6 +70,7 @@
             ?>
         </div>
     </body>
+    <script src="main.js" async defer></script>
 </html>
 
 

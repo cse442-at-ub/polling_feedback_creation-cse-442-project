@@ -14,13 +14,33 @@ function keepHighlighted(current) {
     xmlhttp.send();
 }
 
+function showResults(){
+    window.location.href = './pollResults.php'
+}
+
+
+function sendPoll(current) {
+    var pollAnswer = document.querySelector('active');
+    if (pollAnswer != null) {
+        pollAnswer.classList.remove('active');
+    }
+    pollAnswer = current;
+    responseString.innerHTML = "Your answer of " + current.value.toString() + " has been saved."
+    // Send pollAnswer to DB
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET","submitPoll.php?answer=" + current.value, true);
+    xmlhttp.send();
+}
+
+
 //function to add and remove answer boxes
-$(document).ready(function() {
-    $(".add-more").click(function(){
-        var html = $(".copy").html();
-        $(".after-add-more").after(html);
-    });
-    $("body").on("click",".remove",function(){ 
-        $(this).parents(".addremove").remove();
-    });
-  });
+// $(document).ready(function() {
+//     $(".add-more").click(function(){
+//         var html = $(".copy").html();
+//         $(".after-add-more").after(html);
+//     });
+//     $("body").on("click",".remove",function(){ 
+//         $(this).parents(".addremove").remove();
+//     });
+//   });
+
