@@ -31,7 +31,7 @@
                 //     $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
                 //     $conn->query($sql);
                 // }else{
-                //     echo "<h4 class='m-3'>" . "NOT FUCKING WORKING" . "</h4>" . "\n";
+                //     echo "<h4 class='m-3'>" . "NOT WORKING" . "</h4>" . "\n";
                 // }
 
                 // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
@@ -46,7 +46,7 @@
 
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<h4 class='m-3'>" . "Question: ". $row["question"] . "</h4>" . "\n";
+                        echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
                         echo "<h5 class='m-3'>" . "Answers: " . $row["question_answer"] . "</h5>" . "\n";
                         if(!empty($row["question_extra_answers"])){
                             echo "<h5 class='m-3'>" . "Answers2: " . $row["question_extra_answers"] . "</h5>";
