@@ -15,7 +15,7 @@ echo "Connected to database." . "<br>";
 
 if ($score == 1 || $score == 2 || $score == 3) {
     echo "Valid entry provided: " . $score . "<br>";
-    $sql = "INSERT INTO scores (email, score) VALUES ('kchen223@buffalo.edu', $score) ON DUPLICATE KEY UPDATE score = $score";
+    $sql = "INSERT INTO scores (ubit, score) VALUES ('kchen223', $score) ON DUPLICATE KEY UPDATE score = $score";
 
     if ($conn->query($sql) === TRUE) {
         echo "Feedback successfully recorded." . "<br>";
