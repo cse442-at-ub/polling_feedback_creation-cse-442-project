@@ -31,15 +31,15 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                // if(!empty($question) || !empty($answer)){
-                //     $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers', '$answers2')";
-                //     $conn->query($sql);
-                // }else{
-                //     ;
-                // }
+                if(!empty($question) || !empty($answer)){
+                    $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers', '$answers2')";
+                    $conn->query($sql);
+                }else{
+                    ;
+                }
 
                 // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
-                $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
+                // $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
                 $sql = "INSERT INTO poll (ubit, pollAnswer) VALUES ('kchen223', '$pollAnswer') ON DUPLICATE KEY UPDATE pollAnswer = '$pollAnswer2'";
 
                 $conn->query($sql);
