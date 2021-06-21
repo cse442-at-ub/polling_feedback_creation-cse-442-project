@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>UB Polling</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="mx-auto" style="width: 50%; text-align: center;">
+            <h1 class="m-3">How are you understanding the material?</h1>
+            <button type="button" class="btn btn-outline-danger btn-lg m-2" data-bs-toggle="modal" data-bs-target="#lostModal" value="1" onclick=sendScore(this)>I'm lost.</button>
+            <button type="button" class="btn btn-outline-primary btn-lg m-2" data-bs-toggle="modal" data-bs-target="#rightModal" value="2" onclick=sendScore(this)>Just right.</button>
+            <button type="button" class="btn btn-outline-success btn-lg m-2" data-bs-toggle="modal" data-bs-target="#easyModal" value="3" onclick=sendScore(this)>This is easy.</button>
+            <h4 id="notification" class="m-3"></h4>
+        </div>
+
+        <script src="main.js" async defer></script>
+    </body>
+</html>
