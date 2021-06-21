@@ -13,10 +13,10 @@
             <h1 class="m-3">Average Feedback</h1>
             <h4 id="notification" class="m-3"></h4>
             <?php                
-                $dbServerName = "localhost";
-                $dbUsername = "root";
-                $dbPassword = "";
-                $dbName = "test";
+                $dbServerName = "oceanus.cse.buffalo.edu";
+                $dbUsername = "kchen223";
+                $dbPassword = "50277192";
+                $dbName = "kchen223_db";
                 
                 $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
                 
