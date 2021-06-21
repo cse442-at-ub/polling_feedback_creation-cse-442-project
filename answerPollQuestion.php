@@ -74,41 +74,18 @@
                         echo '<script src="main.js" async defer></script> <script type="text/javascript">showResults()</script>';
                     }
                     echo '</div>';
-                    
-                    // echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
-                    // echo '<div class="form-check">
-                    //         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    //         <label class="form-check-label" for="exampleRadios1">
-                    //         </label>';
-                    // echo $row["question_answer"] . "\n";
-                    // if(!empty($row["question_extra_answers"])){
-                    //     echo '</div>
-                    //           <div class="form-check">
-                    //             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                    //             <label class="form-check-label" for="exampleRadios2">
-                    //             </label>';
-                    //     echo $row["question_extra_answers"] . "\n";
-                    // }
-                    // if ($row['status'] == 'open'){
-                    //     echo"<p class='h3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>";
-                    // }
-                    // else{
-                    //     echo '<script type="text/javascript">showResults()</script>';
-                    // }
-                    // echo '</div>';
                 }
 
                 
         
             }
             else {
-                echo "<h4 class='m-3'>There are no questions with that number.</h4> \n";
+                echo "<h4 class='m-3'>There is not a question with that number.</h4> \n";
             }
             ?>
             <br><br>
             <p style = "text-align: center;" class="h3" id = "responseString"></p>
             <div class="mx-auto" style="text-align: center;">
-                <!-- <button type="submit" name="submit" class="btn btn-primary">Submit</button> -->
             </div>
         </form>
     </div>
