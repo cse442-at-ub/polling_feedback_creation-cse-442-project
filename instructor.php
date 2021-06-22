@@ -24,18 +24,20 @@
                     die("Connection failed: " . $conn->connect_error . "<br>");
                 }
 
-                $sql = "SELECT timestamp, AVG(score) FROM scores WHERE timestamp > DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+                $sql = "SELECT AVG(score) FROM scores WHERE timestamp > DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         $average = $row['AVG(score)'];
                         if ($average == 0) {
-                            echo "No recent submissions. <br>";
+                            echo "<h3>No recent submissions.</h3><br>";
                         } else {
                             echo "<h1>" . round($average, 1) . "<h1>";
                         }
                     }
+                } else {
+                    echo "No recent submissions. <br>";
                 }
 
                 // echo "It is currently: " . date("Y-m-d H:m:s") . "<br>";
