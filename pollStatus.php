@@ -21,7 +21,62 @@
             <button type="submit" name="open" id="open" class="btn btn-success btn-flat"><i class="fa fa-check"> Open Poll </i></button>
             <button type="submit" name="close" id="close" class="btn btn-danger btn-flat"><i class="fa fa-times"> Close Poll </i></button>
 
+            </form>
+            
+            <?php
+            
+            $open = $_POST["open"];
+            $close = $_POST["close"];
+            $questionNumber = $_GET["number"];
+
+            $dbServerName = "oceanus.cse.buffalo.edu";
+            $dbUsername = "kchen223";
+            $dbPassword = "50277192";
+            $dbName = "kchen223_db";
+
+            $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error . "\n");
+            }
+            // if(isset($_POST["open"])){
+            //     $sql = "UPDATE pollquestions SET status = 'open' question_number = '$questionNumber'";
+            //     $query_run = mysqli_query($conn, $sql);
+            //     echo"<p class='h3' style='text-align:center'>The poll is open.</p>";
+
+            // }
+            // if(isset($_POST["close"])){
+            //     $sql = "UPDATE pollquestions SET status = 'close' where question_number = '$questionNumber'";
+            //     $query_run = mysqli_query($conn, $sql);
+            //     echo"<p class='h3' style='text-align:center'>The poll is closed.</p>";
+            // }
+
+            $sql = "SELECT * FROM pollquestions WHERE question_number = '$questionNumber'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if(isset($_POST["open"])){
+                        $sql = "UPDATE pollquestions SET status = 'open' WHERE pollquestions . question_number = $questionNumber";
+                        // $sql = "UPDATE pollquestions SET status = 'open' question_number = '$questionNumber'";
+                        $query_run = mysqli_query($conn, $sql);
+                        echo"<p class='h3' style='text-align:center'>The poll is open.</p>";
         
+                    }
+                    if(isset($_POST["close"])){
+                        $sql = "UPDATE pollquestions SET status = 'close' WHERE pollquestions . question_number = $questionNumber";
+                        // $sql = "UPDATE pollquestions SET status = 'open' question_number = '$questionNumber'";
+                        $query_run = mysqli_query($conn, $sql);
+                        echo"<p class='h3' style='text-align:center'>The poll is closed.</p>";
+                    }
+
+                }
+            }
+            ?>
+            <br><br>
+            <p style = "text-align: center;" class="h3" id = "responseString"></p>
+            <div class="mx-auto" style="text-align: center;">
+                <!-- <button type="submit" name="submit" class="btn btn-primary">Submit</button> -->
+            </div>
+        </form>
     </div>
 </body>
 </html>
