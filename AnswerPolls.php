@@ -32,7 +32,7 @@
                 }
                 
                 if(!empty($question) || !empty($answer)){
-                    $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers', '$answers2')";
+                    $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
                     $conn->query($sql);
                 }else{
                     ;
@@ -40,9 +40,9 @@
 
                 // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
                 // $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
-                $sql = "INSERT INTO poll (ubit, pollAnswer) VALUES ('kchen223', '$pollAnswer') ON DUPLICATE KEY UPDATE pollAnswer = '$pollAnswer2'";
+                // $sql = "INSERT INTO poll (ubit, pollAnswer) VALUES ('kchen223', '$pollAnswer') ON DUPLICATE KEY UPDATE pollAnswer = '$pollAnswer2'";
 
-                $conn->query($sql);
+                // $conn->query($sql);
                 
                 // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
                 $sql = "SELECT * FROM pollquestions";
