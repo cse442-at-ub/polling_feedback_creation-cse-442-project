@@ -34,7 +34,7 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                if(!empty($question) || !empty($answer)){
+                if(!empty($question) || !empty($answer1)){
                     $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
                     VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
                     $conn->query($sql);
@@ -48,16 +48,21 @@
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
-                        echo "<h5 class='m-3'>" . "Answer Choice 1: " . $row["question_choice1"] . "</h5>" . "\n";
-                        if(!empty($row["question_choice2"]) || !empty($row["question_choice3"]) ||!empty($row["question_choice4"]) || !empty($row["question_choice5"]) ){
-                            echo "<h5 class='m-3'>" . "Answer Choice 2: " . $row["question_choice2"] . "</h5>" . "\n";
-                            echo "<h5 class='m-3'>" . "Answer Choice 3: " . $row["question_choice3"] . "</h5>" . "\n";
-                            echo "<h5 class='m-3'>" . "Answer Choice 4: " . $row["question_choice4"] . "</h5>" . "\n";
-                            echo "<h5 class='m-3'>" . "Answer Choice 5: " . $row["question_choice5"] . "</h5>" . "\n";
-                        }else{
-                            echo "\n";
+                        echo "<h5 class='m-3'>" . "Answer Choice 1: " . $row["answer_choice1"] . "</h5>" . "\n";
+                        if(!empty($answers2)){
+                            echo "<h5 class='m-3'>" . "Answer Choice 2: " . $row["answer_choice2"] . "</h5>" . "\n";
                         }
-                      }
+                        if(!empty($answers3)){
+                            echo "<h5 class='m-3'>" . "Answer Choice 3: " . $row["answer_choice3"] . "</h5>" . "\n";
+                        }
+                        if(!empty($answers4)){
+                            echo "<h5 class='m-3'>" . "Answer Choice 4: " . $row["answer_choice4"] . "</h5>" . "\n";
+                        }
+                        if(!empty($answers5)){
+                            echo "<h5 class='m-3'>" . "Answer Choice 5: " . $row["answer_choice5"] . "</h5>" . "\n";
+                        }
+                        echo "\n";
+                    }
                 } else {
                     echo "<h4 class='m-3'>There are no questions currently in the database.</h4> \n";
                 }
