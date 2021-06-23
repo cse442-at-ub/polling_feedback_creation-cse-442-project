@@ -49,16 +49,16 @@
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
                         echo "<h5 class='m-3'>" . "Answer Choice 1: " . $row["answer_choice1"] . "</h5>" . "\n";
-                        if(!empty($answers2)){
+                        if($row["answer_choice2"]){
                             echo "<h5 class='m-3'>" . "Answer Choice 2: " . $row["answer_choice2"] . "</h5>" . "\n";
                         }
-                        if(!empty($answers3)){
+                        if($row["answer_choice3"]){
                             echo "<h5 class='m-3'>" . "Answer Choice 3: " . $row["answer_choice3"] . "</h5>" . "\n";
                         }
-                        if(!empty($answers4)){
+                        if($row["answer_choice4"]){
                             echo "<h5 class='m-3'>" . "Answer Choice 4: " . $row["answer_choice4"] . "</h5>" . "\n";
                         }
-                        if(!empty($answers5)){
+                        if($row["answer_choice5"]){
                             echo "<h5 class='m-3'>" . "Answer Choice 5: " . $row["answer_choice5"] . "</h5>" . "\n";
                         }
                         echo "\n";
