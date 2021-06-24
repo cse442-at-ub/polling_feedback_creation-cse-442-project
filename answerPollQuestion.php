@@ -42,9 +42,11 @@
             }
 
             // $sql = "SELECT * FROM pollquestions";
-            $sql = "SELECT * FROM pollquestions WHERE question_number = '$questionNumber'";
-
-            $result = $conn->query($sql);
+            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE question_number = ? ");
+            $stmt -> bind_param("s", $questionNumber);
+            $status = $stmt -> execute();
+            
+            $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
