@@ -1,6 +1,4 @@
 <?php
-$score = $_GET['score'];
-
 $dbServerName = "oceanus.cse.buffalo.edu";
 $dbUsername = "kchen223";
 $dbPassword = "50277192";
@@ -14,11 +12,16 @@ if ($conn->connect_error) {
 echo "Connected to database." . "<br>";
 
 $score = mysqli_real_escape_string($conn, $_GET['score']);
+$ubit = mysqli_real_escape_string($conn, $_GET['ubit']);
+
+if(empty($ubit)) {
+    die("Empty UBIT. Aborting query.");
+}
 
 if ($score == 1 || $score == 2 || $score == 3) {
     echo "Valid entry provided: " . $score . "<br>";
-    $stmt = $conn->prepare("INSERT INTO scores (ubit, score) VALUES ('kchen223', ?) ON DUPLICATE KEY UPDATE score = ?");
-    $stmt->bind_param('ii', $score, $score);
+    $stmt = $conn->prepare("INSERT INTO scores (ubit, score) VALUES (?, ?) ON DUPLICATE KEY UPDATE score = ?");
+    $stmt->bind_param('sii', $ubit, $score, $score);
 
     if ($stmt->execute() === TRUE) {
         echo "Feedback successfully recorded." . "<br>";
