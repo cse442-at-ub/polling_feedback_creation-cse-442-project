@@ -13,28 +13,24 @@
               
         <div class="mx-auto" style="text-align: left;">
             <?php
-
-                $question = $_REQUEST['question'];
-                $answers1 = $_REQUEST['answer1'];
-                $answers2 = $_REQUEST['answer2'];
-                $answers3 = $_REQUEST['answer3'];
-                $answers4 = $_REQUEST['answer4'];
-                $answers5 = $_REQUEST['answer5'];
-                $status = "open";
                 
-                $pollAnswer = $_GET["answer"];
-                $pollAnswer2 = $_GET["answer"];
-
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
                 $dbName = "kchen223_db";
-
+                
                 $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
+                $question = mysqli_real_escape_string($conn, $_REQUEST['question']);
+                $answers1 = mysqli_real_escape_string($conn, $_REQUEST['answer1']);
+                $answers2 = mysqli_real_escape_string($conn, $_REQUEST['answer2']);
+                $answers3 = mysqli_real_escape_string($conn, $_REQUEST['answer3']);
+                $answers4 = mysqli_real_escape_string($conn, $_REQUEST['answer4']);
+                $answers5 = mysqli_real_escape_string($conn, $_REQUEST['answer5']);
+                $status = mysqli_real_escape_string($conn, "open");
 
                 $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
                 VALUES (?,?,?,?,?,?,?)");
@@ -46,7 +42,7 @@
                 if(!empty($question) || !empty($answer1)){
                     $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
                     VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
-                    $conn->query($sql);
+                    // $conn->query($sql);
                 }else{
                     ;
                 }
