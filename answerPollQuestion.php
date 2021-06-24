@@ -56,27 +56,28 @@
                         
                         if($row["answer_choice1"]){
                             ?>
-                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice1"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice1"]?> </button></div>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "<?php echo $row["answer_choice1"] ?>" onclick=sendPoll(this)> <?php echo $row["answer_choice1"]?> </button></div>
                         <?php
                         }
                         if($row["answer_choice2"]){
                             ?>
-                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice2"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice2"]?> </button></div>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "<?php echo $row["answer_choice2"] ?>" onclick=sendPoll(this)> <?php echo $row["answer_choice2"]?> </button></div>
                         <?php
                         }
                         if($row["answer_choice3"]){
                             ?>
-                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice3"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice3"]?> </button></div>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "<?php echo $row["answer_choice3"] ?>" onclick=sendPoll(this)> <?php echo $row["answer_choice3"]?> </button></div>
                         <?php
                         }
                         if($row["answer_choice4"]){
                             ?>
-                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice4"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice4"]?> </button></div>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "<?php echo $row["answer_choice4"] ?>" onclick=sendPoll(this)> <?php echo $row["answer_choice4"]?> </button></div>
                         <?php
                         }
                         if($row["answer_choice5"]){
                             ?>
-                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice5"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice5"]?> </button></div>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "<?php echo $row["answer_choice5"] ?>" onclick=sendPoll(this)> <?php echo $row["answer_choice5"]?> </button></div>
+
                         <?php
                         }
                 
