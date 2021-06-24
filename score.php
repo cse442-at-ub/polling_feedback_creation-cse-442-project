@@ -13,17 +13,20 @@ if ($conn->connect_error) {
 }
 echo "Connected to database." . "<br>";
 
+$score = mysqli_real_escape_string($conn, $_GET['score']);
+
 if ($score == 1 || $score == 2 || $score == 3) {
     echo "Valid entry provided: " . $score . "<br>";
-    $sql = "INSERT INTO scores (ubit, score) VALUES ('kchen223', $score) ON DUPLICATE KEY UPDATE score = $score";
+    $stmt = $conn->prepare("INSERT INTO scores (ubit, score) VALUES ('kchen223', ?) ON DUPLICATE KEY UPDATE score = ?");
+    $stmt->bind_param('ii', $score, $score);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute() === TRUE) {
         echo "Feedback successfully recorded." . "<br>";
     } else {
-        echo "Feedback submission failed. " . "<br>" . "Query: " . $sql . "<br>" . "Error: " . $conn->error . "<br>";
+        echo "Feedback submission failed. " . "<br>" . "Query: " . htmlspecialchars($sql) . "<br>" . "Error: " . htmlspecialchars($conn->error) . "<br>";
     }
 } else {
-    echo "Invalid entry provided: " . $score . "<br>";
+    echo "Invalid entry provided: " . htmlspecialchars($score) . "<br>";
 }
 
 $conn->close();
