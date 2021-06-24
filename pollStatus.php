@@ -50,8 +50,12 @@
             //     echo"<p class='h3' style='text-align:center'>The poll is closed.</p>";
             // }
 
-            $sql = "SELECT * FROM pollquestions WHERE question_number = '$questionNumber'";
-            $result = $conn->query($sql);
+            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE question_number = ? ");
+            $stmt -> bind_param("s", $questionNumber);
+            $status = $stmt -> execute();
+            
+            $result = $stmt->get_result();
+
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     if(isset($_POST["open"])){
@@ -59,7 +63,6 @@
                         // $sql = "UPDATE pollquestions SET status = 'open' question_number = '$questionNumber'";
                         $query_run = mysqli_query($conn, $sql);
                         echo"<p class='h3' style='text-align:center'>The poll is open.</p>";
-        
                     }
                     if(isset($_POST["close"])){
                         $sql = "UPDATE pollquestions SET status = 'close' WHERE pollquestions . question_number = $questionNumber";
@@ -70,6 +73,12 @@
 
                 }
             }
+            else {
+                echo '<script src="main.js" async defer></script> <script type="text/javascript">hideButtons()</script>';
+                echo "<h4 class='m-3'>There are no questions with that number.</h4> \n";
+                
+            }
+        
             ?>
             <br><br>
             <p style = "text-align: center;" class="h3" id = "responseString"></p>
