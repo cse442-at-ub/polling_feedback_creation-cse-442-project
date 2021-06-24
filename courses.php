@@ -10,11 +10,9 @@
     </head>
     <body>
         <div class="mx-auto" style="text-align: left;">
-            <?php
-                $email = $_REQUEST['input_email'];
-              
+            <?php  
                 echo "<h1 class='m-3'>Courses</h1>";
-
+                
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
@@ -25,13 +23,17 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                $sql = "SELECT email, course FROM courses WHERE email = '$email'";
-                
-                $result = $conn->query($sql);
-                
+                $email = mysqli_real_escape_string($conn, $_POST['input_email']);
+
+                $stmt = $conn->prepare('SELECT email, course FROM courses WHERE email = ?');
+                $stmt->bind_param('s', $email);
+               
+                $stmt->execute();
+               
+                $result = $stmt->get_result();
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<h4 class='m-3'>" . $row["course"] . "</h4>" . "\n";
+                        echo "<h4 class='m-3'>" . htmlspecialchars($row["course"]) . "</h4>" . "\n";
                       }
                 } else {
                     echo "<h4 class='m-3'>You are not enrolled in any courses.</h4> \n";
