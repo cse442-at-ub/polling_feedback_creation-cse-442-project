@@ -9,15 +9,11 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
     <body>
+    <div class="alert alert-primary" style ="text-align: center;" role="alert"><h4>Questions and Answer Received!</h4> </div>
+              
         <div class="mx-auto" style="text-align: left;">
             <?php
-                echo "<h1 class='m-3'>Questions and Answers Recieved!</h1>";
 
-                $question = $_REQUEST['question'];
-                $answers = $_REQUEST['answer'];
-                $answers2 = $_REQUEST['extraAnswer'];
-                $status = "open";
-                
                 $pollAnswer = $_GET["answer"];
                 $pollAnswer2 = $_GET["answer"];
 
@@ -31,37 +27,56 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                if(!empty($question) || !empty($answer)){
-                    $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers', '$answers2')";
+                
+
+                $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
+                VALUES (?,?,?,?,?,?,?)");
+
+                $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
+                // if(!empty($question) || !empty($answer1)){
+                    $stmt->execute();
+                // }
+                $result = $stmt->get_result();
+                $question = htmlspecialchars($_REQUEST['question']);
+                $answers1 = htmlspecialchars($_REQUEST['answer1']);
+                $answers2 = htmlspecialchars($_REQUEST['answer2']);
+                $answers3 = htmlspecialchars($_REQUEST['answer3']);
+                $answers4 = htmlspecialchars($_REQUEST['answer4']);
+                $answers5 = htmlspecialchars($_REQUEST['answer5']);
+                $status = htmlspecialchars("open");
+
+                if(!empty($question) || !empty($answer1)){
+                    $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
+                    VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
                     $conn->query($sql);
                 }else{
                     ;
                 }
-
-                // $sql = "INSERT INTO pollquestions (question, question_answer) VALUES ('$question', '$answers')";
-                // $sql = "INSERT INTO pollquestions (question, question_answer, question_extra_answers, status) VALUES ('$question', '$answers', '$answers2', '$status')";
-                $sql = "INSERT INTO poll (ubit, pollAnswer) VALUES ('kchen223', '$pollAnswer') ON DUPLICATE KEY UPDATE pollAnswer = '$pollAnswer2'";
-
-                $conn->query($sql);
                 
-                // $sql = "SELECT question, question_answer FROM pollquestions WHERE question = '$question'";
+                
                 $sql = "SELECT * FROM pollquestions";
-                // $sql = "SELECT * FROM pollquestions WHERE question= '$question'";
-
                 $result = $conn->query($sql);
-
+                
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
-                        echo "<h5 class='m-3'>" . "Answers: " . $row["question_answer"] . "</h5>" . "\n";
-                        if(!empty($row["question_extra_answers"])){
-                            echo "<h5 class='m-3'>" . "Answers2: " . $row["question_extra_answers"] . "</h5>";
-                        }else{
-                            echo "\n";
+                        echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
+                        if($row["answer_choice2"]){
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
                         }
-                      }
+                        if($row["answer_choice3"]){
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice3"] . "</h5>" . "\n";
+                        }
+                        if($row["answer_choice4"]){
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice4"] . "</h5>" . "\n";
+                        }
+                        if($row["answer_choice5"]){
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice5"] . "</h5>" . "\n";
+                        }
+                        echo "\n";
+                    }
                 } else {
-                    echo "<h4 class='m-3'>There are no questions.</h4> \n";
+                    echo "<h4 class='m-3'>There are no questions currently in the database.</h4> \n";
                 }
 
                 // header("Location: pollQuestion.html");

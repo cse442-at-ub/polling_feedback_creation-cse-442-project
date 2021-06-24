@@ -42,50 +42,86 @@
             }
 
             // $sql = "SELECT * FROM pollquestions";
-            $sql = "SELECT * FROM pollquestions WHERE question_number = '$questionNumber'";
-
-            $result = $conn->query($sql);
+            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE question_number = ? ");
+            $stmt -> bind_param("s", $questionNumber);
+            $status = $stmt -> execute();
+            
+            $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     if ($row['status'] == 'open'){
                         echo"<p class='h3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>";
                         echo "<h4 class='m-3' style = 'text-align:center; text-decoration:underline;'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
-                        echo '<div class="form-check">
-                        <button type="button" class="btn btn-outline-danger btn-lg m-2" value="No" onclick=sendPoll(this)>No</button>
-    
-                                </label>';
-                        // echo $row["question_answer"] . "\n";
-                        if(!empty($row["question_extra_answers"])){
-                            echo '</div>
-                                  <div class="form-check">
-                                  <button type="button" class="btn btn-outline-primary btn-lg m-2" value="Tentative" onclick=sendPoll(this)>Tentative</button>
-                                    </label>';
-    
-                            echo '</div>
-                            <div class="form-check">
-                            <button type="button" class="btn btn-outline-success btn-lg m-2" value="Yes" onclick=sendPoll(this)>Yes</button>
-            
-                            </div>';
+                        
+                        if($row["answer_choice1"]){
+                            ?>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice1"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice1"]?> </button></div>
+                        <?php
                         }
+                        if($row["answer_choice2"]){
+                            ?>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice2"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice2"]?> </button></div>
+                        <?php
+                        }
+                        if($row["answer_choice3"]){
+                            ?>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice3"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice3"]?> </button></div>
+                        <?php
+                        }
+                        if($row["answer_choice4"]){
+                            ?>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice4"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice4"]?> </button></div>
+                        <?php
+                        }
+                        if($row["answer_choice5"]){
+                            ?>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["answer_choice5"] ?> onclick=sendPoll(this)> <?php echo $row["answer_choice5"]?> </button></div>
+                        <?php
+                        }
+                
+                        
                     }
                     else{
                         
                         echo '<script src="main.js" async defer></script> <script type="text/javascript">showResults()</script>';
                     }
                     echo '</div>';
+                    
+                    // echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
+                    // echo '<div class="form-check">
+                    //         <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    //         <label class="form-check-label" for="exampleRadios1">
+                    //         </label>';
+                    // echo $row["question_answer"] . "\n";
+                    // if(!empty($row["question_extra_answers"])){
+                    //     echo '</div>
+                    //           <div class="form-check">
+                    //             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                    //             <label class="form-check-label" for="exampleRadios2">
+                    //             </label>';
+                    //     echo $row["question_extra_answers"] . "\n";
+                    // }
+                    // if ($row['status'] == 'open'){
+                    //     echo"<p class='h3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>";
+                    // }
+                    // else{
+                    //     echo '<script type="text/javascript">showResults()</script>';
+                    // }
+                    // echo '</div>';
                 }
 
                 
         
             }
             else {
-                echo "<h4 class='m-3'>There is not a question with that number.</h4> \n";
+                echo "<h4 class='m-3'>There are no questions with that number.</h4> \n";
             }
             ?>
             <br><br>
             <p style = "text-align: center;" class="h3" id = "responseString"></p>
             <div class="mx-auto" style="text-align: center;">
+                <!-- <button type="submit" name="submit" class="btn btn-primary">Submit</button> -->
             </div>
         </form>
     </div>

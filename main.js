@@ -74,12 +74,13 @@ function sendPoll(current) {
 
 
 // function to add and remove answer boxes
-$(document).ready(function() {
-    $(".add-more").click(function(){
-        var html = $(".copy").html();
-        $(".after-add-more").after(html);
-    });
-    $("body").on("click",".remove",function(){ 
-        $(this).parents(".addremove").remove();
-    });
-  });
+// $(document).ready(function() {
+//     $(".add-more").click(function(){
+//         var html = $(".copy").html();
+//         $(".after-add-more").after(html);
+//     });
+//     $("body").on("click",".remove",function(){ 
+//         $(this).parents(".addremove").remove();
+//     });
+//   });
+
