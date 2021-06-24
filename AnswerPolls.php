@@ -9,9 +9,10 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
     <body>
+    <div class="alert alert-primary" style ="text-align: center;" role="alert"><h4>Questions and Answer Received!</h4> </div>
+              
         <div class="mx-auto" style="text-align: left;">
             <?php
-                echo "<h1 class='m-3'>Questions and Answers Recieved!</h1>";
 
                 $question = $_REQUEST['question'];
                 $answers1 = $_REQUEST['answer1'];
