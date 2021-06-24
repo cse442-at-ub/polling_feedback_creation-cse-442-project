@@ -35,6 +35,18 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
+
+                $stmt = $conn->prepare("SELECT * FROM pollquestions WHERE 
+                question = ?, 
+                AND answer_choice1 = ?, 
+                AND answer_choice2 = ?, 
+                AND answer_choice3 = ?, 
+                AND answer_choice4 = ?, 
+                AND answer_choice5 = ? ");
+
+                $stmt->bind_param("sssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5);
+                $stmt->execute();
+                
                 if(!empty($question) || !empty($answer1)){
                     $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
                     VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
@@ -45,22 +57,22 @@
 
                 $sql = "SELECT * FROM pollquestions";
                 $result = $conn->query($sql);
-
+                
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
-                        echo "<h5 class='m-3'>" . "Answer Choice 1: " . $row["answer_choice1"] . "</h5>" . "\n";
+                        echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
                         if($row["answer_choice2"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice 2: " . $row["answer_choice2"] . "</h5>" . "\n";
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
                         }
                         if($row["answer_choice3"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice 3: " . $row["answer_choice3"] . "</h5>" . "\n";
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice3"] . "</h5>" . "\n";
                         }
                         if($row["answer_choice4"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice 4: " . $row["answer_choice4"] . "</h5>" . "\n";
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice4"] . "</h5>" . "\n";
                         }
                         if($row["answer_choice5"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice 5: " . $row["answer_choice5"] . "</h5>" . "\n";
+                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice5"] . "</h5>" . "\n";
                         }
                         echo "\n";
                     }
