@@ -36,17 +36,13 @@
                 }
                 
 
-                $stmt = $conn->prepare("SELECT * FROM pollquestions WHERE 
-                question = ?, 
-                AND answer_choice1 = ?, 
-                AND answer_choice2 = ?, 
-                AND answer_choice3 = ?, 
-                AND answer_choice4 = ?, 
-                AND answer_choice5 = ? ");
+                $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
+                VALUES (?,?,?,?,?,?,?)");
 
-                $stmt->bind_param("sssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5);
+                $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
                 $stmt->execute();
-                
+                $result = $stmt->get_result();
+
                 if(!empty($question) || !empty($answer1)){
                     $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
                     VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
