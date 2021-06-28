@@ -27,16 +27,6 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                
-
-                $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
-                VALUES (?,?,?,?,?,?,?)");
-
-                $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
-                // if(!empty($question) || !empty($answer1)){
-                    $stmt->execute();
-                // }
-                $result = $stmt->get_result();
                 $question = htmlspecialchars($_REQUEST['question']);
                 $answers1 = htmlspecialchars($_REQUEST['answer1']);
                 $answers2 = htmlspecialchars($_REQUEST['answer2']);
@@ -44,11 +34,13 @@
                 $answers4 = htmlspecialchars($_REQUEST['answer4']);
                 $answers5 = htmlspecialchars($_REQUEST['answer5']);
                 $status = htmlspecialchars("open");
-
+                
                 if(!empty($question) || !empty($answer1)){
-                    $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
-                    VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
-                    $conn->query($sql);
+                    $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
+                    VALUES (?,?,?,?,?,?,?)");
+                    $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                 }else{
                     ;
                 }
@@ -85,6 +77,3 @@
     </body>
     <script src="main.js" async defer></script>
 </html>
-
-
-
