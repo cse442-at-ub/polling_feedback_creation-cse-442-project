@@ -10,9 +10,7 @@
     </head>
     <body>
         <div class="mx-auto" style="text-align: left;">
-            <?php  
-                echo "<h1 class='m-3'>Courses</h1>";
-                
+            <?php 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
@@ -25,20 +23,29 @@
                 
                 $email = mysqli_real_escape_string($conn, $_POST['input_email']);
 
-                $stmt = $conn->prepare('SELECT email, course FROM courses WHERE email = ?');
+                $stmt = $conn->prepare('SELECT email, course, instructor_student FROM courses WHERE email = ?');
                 $stmt->bind_param('s', $email);
-               
                 $stmt->execute();
-               
                 $result = $stmt->get_result();
+
+                $count = 0;
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<h4 class='m-3'>" . htmlspecialchars($row["course"]) . "</h4>" . "\n";
+                        //for instructors
+                        if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count == 0){
+                            echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
+                            echo "<h4 class='m-3'>Begin by selecting a course. </h4>";
+                            $count += 1;
+                            //send to alex's page
+                        }
+                        ?>
+                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["course"] ?> > <?php echo $row["course"]?> </button></div>
+                        <?php
                       }
-                } else {
-                    echo "<h4 class='m-3'>You are not enrolled in any courses.</h4> \n";
-                }
-            ?>
+                    }else{
+                        echo "<h4 class='m-3'>You are not enrolled in any courses.</h4> \n";
+                    }
+                    ?>
         </div>
     </body>
 </html>
