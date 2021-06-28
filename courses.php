@@ -35,6 +35,11 @@
                         if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
                             echo "<h4 class='m-3'>Begin by selecting a course. </h4>";
+
+                            $ubit_key = "ubit";
+                            $ubit_value = str_replace("@buffalo.edu","",$row["email"]);
+                            setcookie($ubit_key, $ubit_value, time() + (86400 * 30), "/"); 
+                            setcookie("status","instructor", time() +(86400 * 30), "/");
                             $count += 1;
                             //send to alex's page
                         }
