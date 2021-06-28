@@ -45,10 +45,13 @@
                         }
                         //for students
                         else if(htmlspecialchars($row["instructor_student"]) == "student" && $count == 0){
-
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
                             echo "<h2 class='m-3'>Here are the courses you are taking. </h4>";
 
+                            $cookie_name = "ubit";
+                            $cookie_value = str_replace("@buffalo.edu","",$row["email"]);
+                            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+                            setcookie("status",$row["instructor_student"], time() +(86400 * 30), "/");
                             $count += 1;
                             //send to kevin's page
                         }
