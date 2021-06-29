@@ -1,4 +1,5 @@
-var score = document.querySelector('active')
+var score = document.querySelector('active');
+var pollAnswer = document.querySelector('active');
 
 function sendScore(current) {
     // Keep button highlighted
@@ -23,7 +24,33 @@ function sendScore(current) {
             }
         }
     }
+    xmlhttp.send();
+}
 
+function sendPoll(current) {
+    if (pollAnswer != null) {
+        pollAnswer.classList.remove('active');
+    }
+    pollAnswer = current;
+    pollAnswer.classList.add('active');;
+    responseString = document.getElementById("responseString");
+    responseString.innerHTML = "<h5 class='text-center'>Your answer of " + current.value.toString() + " has been saved.</h5>";
+    // Send pollAnswer to DB
+    question_id = document.getElementById("question_id");
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET","submitPoll.php?answer=" + current.value + "&id=" + question_id.value, true);
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === 4) {
+            if (xmlhttp.status === 200) {
+                console.log('Request successful.');
+                sendNotification(score.innerHTML, ubit);
+            } else {
+                console.log('Request failed.');
+                document.getElementById('notification').innerHTML = "<p class='text-danger'>Feedback could not be submitted.</p>"
+            }
+        }
+    }
     xmlhttp.send();
 }
 
@@ -39,48 +66,3 @@ function sendNotification(score, ubit) {
         document.getElementById('notification').innerHTML = "<p class='text-danger'>Please enter a UBIT.</p>";
     }
 }
-
-function keepHighlighted(current) {
-    // Keep button highlighted
-    if (score != null) {
-        score.classList.remove('active');
-    }
-    score = current;
-    score.classList.add('active');
-    document.getElementById('notification').innerHTML = "Your feedback has been submitted: " + "<br>" + "<b>" + score.innerHTML + "</b>"
-    // Send poll question to DB
-    var xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("GET","PollQuestion.php?answers=" + score.value, true);
-    xmlhttp.send();
-}
-
-function showResults(){
-    window.location.href = './pollResults.php'
-}
-
-
-function sendPoll(current) {
-    var pollAnswer = document.querySelector('active');
-    if (pollAnswer != null) {
-        pollAnswer.classList.remove('active');
-    }
-    pollAnswer = current;
-    responseString.innerHTML = "Your answer of " + current.value.toString() + " has been saved."
-    // Send pollAnswer to DB
-    var xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("GET","submitPoll.php?answer=" + current.value, true);
-    xmlhttp.send();
-}
-
-
-// function to add and remove answer boxes
-// $(document).ready(function() {
-//     $(".add-more").click(function(){
-//         var html = $(".copy").html();
-//         $(".after-add-more").after(html);
-//     });
-//     $("body").on("click",".remove",function(){ 
-//         $(this).parents(".addremove").remove();
-//     });
-//   });
-
