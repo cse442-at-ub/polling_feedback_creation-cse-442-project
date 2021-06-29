@@ -60,6 +60,8 @@
                         <?php
                       }
                     }else{
+                        setcookie("ubit", "", time() - 3600, "/");
+                        setcookie("status", "", time() - 3600, "/");
                         echo "<h4 class='m-3'>You are not enrolled in any courses.</h4> \n";
                     }
                     ?>
