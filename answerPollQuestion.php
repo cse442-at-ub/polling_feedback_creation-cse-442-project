@@ -53,6 +53,7 @@
                     if ($row['status'] == 'open'){
                         echo"<p class='h3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>";
                         echo "<h4 class='m-3' style = 'text-align:center; text-decoration:underline;'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
+                        echo "<h4 class='m-3' style = 'text-align:center; text-decoration:underline;'>" . "For class " . $row["course"] . "</h4>" . "\n";
                         
                         if($row["answer_choice1"]){
                             ?>
