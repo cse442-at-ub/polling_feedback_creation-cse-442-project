@@ -1,9 +1,9 @@
 <?php
 function update_poll_answer() {
-    $dbServerName = "localhost";
-    $dbUsername = "root";
-    $dbPassword = "";
-    $dbName = "test";
+    $dbServerName = "oceanus.cse.buffalo.edu";
+    $dbUsername = "kchen223";
+    $dbPassword = "50277192";
+    $dbName = "kchen223_db";
     $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
 
     if ($conn->connect_error) {
