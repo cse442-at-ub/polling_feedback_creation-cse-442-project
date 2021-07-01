@@ -12,145 +12,39 @@
     
     <body>
         <div class="mx-auto text-center">
-                <?php
-                // Raise while loop execution time limit to 10 minutes 
-                set_time_limit(600);
-                echo "<h1 class='m-3 text-center'>CSE 442</h1>";
+            <?php
+            // Hard coding course cookie; connect with login page later
+            $course_key = "course";
+            $course_value = "CSE 442";
+            setcookie($course_key, $course_value, time() + (86400 * 30), "/");
+            $ubit_key = "ubit";
+            $ubit_value = "kchen223";
+            setcookie($ubit_key, $ubit_value, time() + (86400 * 30), "/");
+            // Checking for course cookie
+            if(isset($_COOKIE[$course_key])) {
+                echo "<h1 class='m-3 text-center'>" . htmlspecialchars($course_value) . "</h1>";
+            }
+            ?>
+            <h5 id="inactive" style="display: none;"></h5>
+            <div id="poll" style="display: none;">
+                <h2 id="question"></h2>
+                <input id="question_id" type="hidden" value="">
+                <div id="choice1"></div>
+                <div id="choice2"></div>
+                <div id="choice3"></div>
+                <div id="choice4"></div>
+                <div id="choice5"></div>
+                <p id="instruction" class='m-3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>
+            </div>
+            <div class="mx-auto" style="width: 50%; text-align: center; display: none;" id="feedback">
+                <h5 class="m-3">How are you understanding the material?</h5>
+                <button type="button" class="btn btn-outline-danger btn-lg m-2" value="1" onclick=sendScore(this)>I'm lost.</button>
+                <button type="button" class="btn btn-outline-primary btn-lg m-2" value="2" onclick=sendScore(this)>Just right.</button>
+                <button type="button" class="btn btn-outline-success btn-lg m-2" value="3" onclick=sendScore(this)>This is easy.</button>
+                <h4 id="notification" class="m-3">
+            </div>
 
-                $dbServerName = "localhost";
-                $dbUsername = "root";
-                $dbPassword = "";
-                $dbName = "test";
-
-                $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error . "\n");
-                }
-
-                // Temporary admin control panel
-
-                while (True) {
-                    $poll_open = False;
-                    $feedback_open = False;
-                    // Check if poll is open
-                    $sql = "SELECT * FROM pollquestions WHERE status = 'open'";
-                    $result = $conn->query($sql);
-                    if ($result->num_rows > 0) {
-                        $poll_open = True;
-                    } else {
-                        $poll_open = False;
-                    }
-                    // Broken feedback check
-                    // $sql = "SELECT * FROM feedback WHERE course = 'CSE442'";
-                    // $result = $conn->query($sql);
-                    // if ($result->num_rows > 0) {
-                    //     while ($row = $result->fetch_assoc()) {
-                    //         $feedback_open = True;
-                    //     }
-                    // }
-                    // xor allows it so that only one shows
-                    if ($poll_open xor $feedback_open) {
-                        // Poll handling
-                        if ($poll_open) {
-                            $sql = "SELECT * FROM pollquestions WHERE status = 'open'";
-                            $result = $conn->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    if ($row['status'] == 'open'){
-                                        // echo "<h1 class='m-3' style='text-align:center;'>Please answer the poll question below.</h1>";
-                                        echo "<h3 class='m-3' style = 'text-align:center; text-decoration:underline;'>" . "Question: " . $row["question"] . "</h3>" . "\n";
-                                        echo"<p class='m-3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>";
-                                        
-                                        if($row["answer_choice1"]){
-                                            echo 
-                                            '<div class="form-check"> 
-                                                <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "' . $row["answer_choice1"] . '" onclick=sendPoll(this)>' .     
-                                                    $row["answer_choice1"] .
-                                                '</button>
-                                            </div>';
-                                        }
-                                        if($row["answer_choice2"]){
-                                            echo 
-                                            '<div class="form-check"> 
-                                                <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "' . $row["answer_choice2"] . '" onclick=sendPoll(this)>' .     
-                                                    $row["answer_choice2"] .
-                                                '</button>
-                                            </div>';                                    
-                                        }
-                                        if($row["answer_choice3"]){
-                                            echo 
-                                            '<div class="form-check"> 
-                                                <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "' . $row["answer_choice3"] . '" onclick=sendPoll(this)>' .     
-                                                    $row["answer_choice3"] .
-                                                '</button>
-                                            </div>';                                    
-                                        }
-                                        if($row["answer_choice4"]){
-                                            echo 
-                                            '<div class="form-check"> 
-                                                <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "' . $row["answer_choice4"] . '" onclick=sendPoll(this)>' .     
-                                                    $row["answer_choice4"] .
-                                                '</button>
-                                            </div>';                                    
-                                        }
-                                        if($row["answer_choice5"]){
-                                            echo 
-                                            '<div class="form-check"> 
-                                                <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = "' . $row["answer_choice5"] . '" onclick=sendPoll(this)>' .     
-                                                    $row["answer_choice5"] .
-                                                '</button>
-                                            </div>';                                    
-                                        }
-                                        // Store question ID in hidden input to be retrieved on submission
-                                        echo '<input type="hidden" id="question_id" value="' . $row["id"] . '">';
-                                        echo '<div id="notification"></div>';
-                                    }
-                                    else {
-                                        $sql2 = "SELECT pollAnswer, count(*) as NUM FROM poll GROUP BY pollAnswer";
-                                        $result2 = mysqli_query($conn, $sql) or die("Bad Query: $sql2");
-                                        
-                                        while($row = mysqli_fetch_array($result2)){
-                                            echo"<p class='h3' style='text-align:center'>{$row['pollAnswer']}: {$row['NUM']}</p><br>";
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                echo "<h3>There are no poll questions at the moment.</h3>";
-                            }
-                        }
-                        // Feedback handling
-                        else if ($feedback_open) {
-                            echo 
-                            '<div class="mx-auto" style="width: 50%; text-align: center;">
-                                <h1 class="m-3">How are you understanding the material?</h1>
-                                <button type="button" class="btn btn-outline-danger btn-lg m-2" data-bs-toggle="modal" data-bs-target="#lostModal" value="1" onclick=sendScore(this)>I\'m lost.</button>
-                                <button type="button" class="btn btn-outline-primary btn-lg m-2" data-bs-toggle="modal" data-bs-target="#rightModal" value="2" onclick=sendScore(this)>Just right.</button>
-                                <button type="button" class="btn btn-outline-success btn-lg m-2" data-bs-toggle="modal" data-bs-target="#easyModal" value="3" onclick=sendScore(this)>This is easy.</button>
-                                <h4 id="notification" class="m-3">
-                            </div>';
-                        }
-                    } 
-                    // If both are open, display feedback as default
-                    else if ($poll_open && $feedback_open) {
-                        echo 
-                        '<div class="mx-auto" style="width: 50%; text-align: center;">
-                            <h1 class="m-3">How are you understanding the material?</h1>
-                            <button type="button" class="btn btn-outline-danger btn-lg m-2" data-bs-toggle="modal" data-bs-target="#lostModal" value="1" onclick=sendScore(this)>I\'m lost.</button>
-                            <button type="button" class="btn btn-outline-primary btn-lg m-2" data-bs-toggle="modal" data-bs-target="#rightModal" value="2" onclick=sendScore(this)>Just right.</button>
-                            <button type="button" class="btn btn-outline-success btn-lg m-2" data-bs-toggle="modal" data-bs-target="#easyModal" value="3" onclick=sendScore(this)>This is easy.</button>
-                            <h4 id="notification" class="m-3">
-                        </div>';
-                    }
-                    // If both are closed, class is not active
-                    else if (!$poll_open && !$feedback_open) {
-                        echo '<h3 class="m-3">Class is not active.</h3>';
-                    }
-                }
-                ?>
-
-            <div id="responseString" class="text-success m-3"></div>
+            <div id="response_string" class="text-success m-3"></div>
         </div>
     </body>
 </html>
