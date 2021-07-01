@@ -35,6 +35,7 @@
                         if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
                             echo "<h4 class='m-3'>Here are the courses you are currently teaching. </h4>";
+                            echo '<i>Click the button corresonding to your class you want to access to enter your instructor dashboard</i>';
 
                             $ubit_key = "ubit";
                             $ubit_value = str_replace("@buffalo.edu","",$row["email"]);
@@ -51,6 +52,7 @@
                                             "<?php echo $row["course"]?>"> 
                                             <?php echo $row["course"]?>
                                     </button>
+
                             </form>
                             <?php
                         }
@@ -60,7 +62,7 @@
                         if(htmlspecialchars($row["instructor_student"]) == "student" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
                             echo "<h2 class='m-3'>Here are the courses you are taking. </h4>";
-
+                            echo '<i>Click the button corresonding to your class you want to access</i>';
                             $cookie_name = "ubit";
                             $cookie_value = str_replace("@buffalo.edu","",$row["email"]);
                             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
