@@ -157,6 +157,38 @@ function populateWindow(data) {
     }
 }
 
+function updatefeedback(status) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",`toggleFeedback.php?feedback=${status}`, true);
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === 4) {
+            if (xmlhttp.status === 200) {
+                console.log('Request successful.');
+            } else {
+                console.log('Request failed.');
+            }
+        }
+    }
+    xmlhttp.send();
+} 
+
+function updatepoll(status) {
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",`togglePoll.php?poll=${status}`, true);
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState === 4) {
+            if (xmlhttp.status === 200) {
+                console.log('Request successful.');
+            } else {
+                console.log('Request failed.');
+            }
+        }
+    }
+    xmlhttp.send();
+} 
+
 window.onload = function() {
     checkCourseStatus();
     setInterval(checkCourseStatus, 10000);
