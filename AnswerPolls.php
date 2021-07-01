@@ -37,7 +37,7 @@
                 $status = htmlspecialchars("open");
                 
                 if(!empty($question) || !empty($answer1)){
-                    $stmt = $conn->prepare("INSERT INTO pollquestions (course, question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
+                    $stmt = $conn->prepare("INSERT INTO pollquestions (course, question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, open_closed)
                     VALUES (?,?,?,?,?,?,?,?)");
                     $stmt->bind_param("ssssssss", $course, $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
                     $stmt->execute();
