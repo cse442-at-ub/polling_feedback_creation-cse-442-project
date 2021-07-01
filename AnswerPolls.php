@@ -53,7 +53,7 @@
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Class " . $row["course"] . "</h4>" . "\n";
-                        echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
+                        echo "<h4 class='m-3'>" . "Question ". $row["id"] . ": ". $row["question"] . "</h4>" . "\n";
                         echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
                         if($row["answer_choice2"]){
                             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
