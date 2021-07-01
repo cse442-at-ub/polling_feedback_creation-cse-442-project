@@ -12,9 +12,7 @@ function update_poll_answer() {
     echo "Connected successfully.\n";
 
     $poll_answer = mysqli_real_escape_string($conn, $_GET["answer"]);
-    echo $poll_answer;
     $question_id = mysqli_real_escape_string($conn, $_GET["id"]);
-    // $pollAnswer2 = mysqli_real_escape_string($conn, $_GET["answer"]);
 
     if(isset($_COOKIE['ubit'])) {
         $ubit = mysqli_real_escape_string($conn, $_COOKIE['ubit']);
