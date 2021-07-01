@@ -30,7 +30,7 @@ function update_feedback() {
         if ($stmt->execute() === TRUE) {
             echo "Feedback successfully recorded." . "<br>";
         } else {
-            echo "Feedback submission failed. " . "<br>" . "Query: " . htmlspecialchars($sql) . "<br>" . "Error: " . htmlspecialchars($conn->error) . "<br>";
+            echo "Feedback submission failed. " . "<br>" . "Query: " . htmlspecialchars($stmt) . "<br>" . "Error: " . htmlspecialchars($conn->error) . "<br>";
         }
     } else {
         echo "Invalid entry provided: " . htmlspecialchars($score) . "<br>";

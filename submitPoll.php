@@ -29,7 +29,7 @@ function update_poll_answer() {
     if ($stmt->execute() === TRUE) {
         echo "New record created successfully. \n";
     } else {
-        echo "Error: " . $sql . "\n" . $conn->error . "\n";
+        echo "Error: " . $stmt . "\n" . $conn->error . "\n";
     }
     
     $conn->close();
