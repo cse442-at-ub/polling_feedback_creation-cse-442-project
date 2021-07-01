@@ -34,7 +34,7 @@
                         //for instructors
                         if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
-                            echo "<h4 class='m-3'>Begin by selecting a course. </h4>";
+                            echo "<h4 class='m-3'>Here are the courses you are currently teaching. </h4>";
 
                             $ubit_key = "ubit";
                             $ubit_value = str_replace("@buffalo.edu","",$row["email"]);
@@ -43,8 +43,21 @@
                             $count += 1;
                             //send to alex's page
                         }
+                        if(htmlspecialchars($row["instructor_student"]) == "instructor"){
+                            ?>
+                            <form action="instructorAdminPanel.php" method="post">
+                                    <button type= "submit" name = "class" id = "<?php echo $row["course"] ?>" class="btn btn-outline-primary btn-lg m-2" 
+                                        value = 
+                                            "<?php echo $row["course"]?>"> 
+                                            <?php echo $row["course"]?>
+                                    </button>
+                            </form>
+                            <?php
+                        }
+
+
                         //for students
-                        else if(htmlspecialchars($row["instructor_student"]) == "student" && $count == 0){
+                        if(htmlspecialchars($row["instructor_student"]) == "student" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
                             echo "<h2 class='m-3'>Here are the courses you are taking. </h4>";
 
@@ -55,15 +68,24 @@
                             $count += 1;
                             //send to kevin's page
                         }
-                        ?>
-                            <div class="form-check"> <button type= "button" class ="btn btn-outline-primary btn-lg m-2" value = <?php echo $row["course"] ?> > <?php echo $row["course"]?> </button></div>
-                        <?php
-                      }
-                    }else{
+                        if(htmlspecialchars($row["instructor_student"]) == "student"){
+                            ?>
+                            <form action="courseContent.php" method="post">
+                                    <button type= "submit" name = "class" id = "<?php echo $row["course"] ?>" class="btn btn-outline-primary btn-lg m-2" 
+                                        value = 
+                                            "<?php echo $row["course"]?>"> 
+                                            <?php echo $row["course"]?>
+                                    </button>
+                            </form>
+                            <?php
+                        }
+
+                    }
+                }else{
                         setcookie("ubit", "", time() - 3600, "/");
                         setcookie("status", "", time() - 3600, "/");
                         echo "<h4 class='m-3'>You are not enrolled in any courses.</h4> \n";
-                    }
+                }
                     ?>
         </div>
     </body>
