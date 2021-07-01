@@ -1,6 +1,5 @@
 let score = document.querySelector('active');
 let pollAnswer = document.querySelector('active');
-let previous
 
 function sendScore(current) {
     // Keep button highlighted
@@ -18,7 +17,7 @@ function sendScore(current) {
         if (xmlhttp.readyState === 4) {
             if (xmlhttp.status === 200) {
                 console.log('Request successful.');
-                sendNotification(score.innerHTML, ubit);
+                sendNotification(score.innerHTML);
             } else {
                 console.log('Request failed.');
                 document.getElementById('notification').innerHTML = "<p class='text-danger'>Feedback could not be submitted.</p>"
@@ -34,7 +33,7 @@ function sendPoll(current) {
     }
     pollAnswer = current;
     pollAnswer.classList.add('active');
-    responseString = document.getElementById("responseString");
+    responseString = document.getElementById("response_string");
     responseString.innerHTML = "<h5 class='text-center'>Your answer of " + current.value.toString() + " has been saved.</h5>";
     // Send pollAnswer to DB
     question_id = document.getElementById("question_id");
@@ -45,26 +44,21 @@ function sendPoll(current) {
         if (xmlhttp.readyState === 4) {
             if (xmlhttp.status === 200) {
                 console.log('Request successful.');
-                sendNotification(score.innerHTML, ubit);    
             } else {
                 console.log('Request failed.');
-                document.getElementById('notification').innerHTML = "<p class='text-danger'>Feedback could not be submitted.</p>"
             }
         }
     }
     xmlhttp.send();
 }
 
-function sendNotification(score, ubit) {
+function feedbackNotification(score) {
     if (score == undefined || score == "") {
         document.getElementById('notification').innerHTML = "<p class='text-danger'>No response received.</p>";
     } else if (score == "I'm lost." || score == "Just right." || score == "This is easy.") {
         document.getElementById('notification').innerHTML = "<p class='text-success'>Your feedback has been submitted! </p>" + "<b>" + score + "</b>"
     } else {
         document.getElementById('notification').innerHTML = "<p class='text-danger'>Invalid feedback option: </p>" + "<b>" + score + "</b>";
-    }
-    if (ubit == "") {
-        document.getElementById('notification').innerHTML = "<p class='text-danger'>Please enter a UBIT.</p>";
     }
 }
 
@@ -85,6 +79,8 @@ function getCookie(cname) {
 }
 
 function checkCourseStatus() {
+    // console.log(document.cookie);
+    console.log(getCookie('course'));
     let currentCourse = encodeURIComponent(getCookie("course"));
     // console.log(currentCourse);
     let xmlhttp = new XMLHttpRequest();
