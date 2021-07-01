@@ -101,7 +101,7 @@ function fetch_choices($course, $conn) {
 
 function return_course_data() {
     $conn = connect();
-    $course = mysqli_real_escape_string($conn, mysqli_real_escape_string($conn, $_GET['course']));
+    $course = urldecode(mysqli_real_escape_string($conn, $_GET['course']));
     $poll_status = check_poll_status($course, $conn);
     $feedback_status = check_feedback_status($course, $conn);
     if ($poll_status == True) {
