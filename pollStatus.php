@@ -66,7 +66,7 @@
                     if($row["open_closed"] = "open"){
                         echo '<script type="text/javascript">openPoll()</script>';
                         if(isset($_POST["close"])){
-                            $sql = "UPDATE pollquestions SET status = 'closed' WHERE pollquestions . id = $questionNumber";
+                            $sql = "UPDATE pollquestions SET open_closed = 'closed' WHERE pollquestions . id = $questionNumber";
                             echo '<script type="text/javascript">closePoll()</script>';
                             $query_run = mysqli_query($conn, $sql);
                         }
@@ -74,7 +74,7 @@
                     if ($row["open_closed"] = "closed"){
                         echo '<script type="text/javascript">closePoll()</script>';
                         if(isset($_POST["open"])){
-                            $sql = "UPDATE pollquestions SET status = 'open' WHERE pollquestions . id = $questionNumber";
+                            $sql = "UPDATE pollquestions SET open_closed = 'open' WHERE pollquestions . id = $questionNumber";
                             echo '<script type="text/javascript">openPoll()</script>';
                             $query_run = mysqli_query($conn, $sql);
                         }
