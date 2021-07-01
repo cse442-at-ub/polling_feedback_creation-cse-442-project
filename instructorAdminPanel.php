@@ -26,22 +26,33 @@
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error . "<br>");
                 }
-                
                 $class = $_POST["class"];
                 echo "<h1 class='m-3'>Dashboard for " . $class . " </h1>";
                 ?>
-                            <form method="post" action="instructorAdminFBPanel.php"> 
-                                <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
-                                    value = 
-                                        $class> 
-                                        Enter FeedBack Config
-                                </button>
-                            </form>
-                        <?php
+                    <form method="post" action="instructorAdminFBPanel.php"> 
+                        <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
+                            value = 
+                                $class> 
+                                Enter FeedBack Config
+                        </button>
+                    </form>
+        
+                    
+                <?php
+                        
                 echo '<br>';
                 echo '<i>Click the button above me to access FeedBack Config</i>';
                 echo '<br>'; echo '<br>';
-                
+                ?>
+                <form method="post" action="pollQuestion.html"> 
+                        <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
+                            value = 
+                                $class> 
+                                Insert Poll Question for specified class
+                        </button>
+                    </form>
+                <?php
+                echo '<br>'; echo '<br>';
                 $sql = "SELECT id, question FROM pollquestions where COURSE = '$class'";
                 $result = $conn->query($sql);
 
