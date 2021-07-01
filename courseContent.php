@@ -14,18 +14,21 @@
         <div class="mx-auto text-center">
             <?php
             // Hard coding course cookie; connect with login page later
-            // $course_key = "course";
-            // $course_value = "CSE 442";
-            // setrawcookie($course_key, $course_value, time() + (86400 * 30), "/");
-            // $ubit_key = "ubit";
-            // $ubit_value = "kchen223";
-            // setrawcookie($ubit_key, $ubit_value, time() + (86400 * 30), "/");
+            $course_key = "course";
+            $course_value = "CSE 442";
+            setcookie($course_key, $course_value, time() + (86400 * 30), "/");
+            $ubit_key = "ubit";
+            $ubit_value = "kchen223";
+            setcookie($ubit_key, $ubit_value, time() + (86400 * 30), "/");
             // Checking for course cookie
-            if(isset($_COOKIE[$course_key])) {
-                echo "<h1 class='m-3 text-center'>" . htmlspecialchars($course_value) . "</h1>";
+            if(isset($_COOKIE['course'])) {
+                echo "<h1 class='m-3 text-center'>" . htmlspecialchars($_COOKIE['course']) . "</h1>";
             }
             ?>
-            
+            <button onclick="updatefeedback('open')">Open feedback</button>
+            <button onclick="updatefeedback('closed')">Close feedback</button>
+            <button onclick="updatepoll('open')">Open poll</button>
+            <button onclick="updatepoll('closed')">Close poll</button>
             <h5 id="inactive" style="display: none;"></h5>
             <div id="poll" style="display: none;">
                 <h2 id="question"></h2>
