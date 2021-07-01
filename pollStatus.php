@@ -20,13 +20,13 @@
         <form method="post">
 
             <button type="submit" name="open" id="open" class="btn btn-success btn-flat"><i class="fa fa-check">Open Poll</i></button>
-            <button type="submit" name="close" id="close" class="btn btn-danger btn-flat"><i class="fa fa-times">Close Poll</i></button>
+            <button type="submit" name="closed" id="closed" class="btn btn-danger btn-flat"><i class="fa fa-times">Close Poll</i></button>
             <p id = 'statusMsg'> </p>
             
             </form>
             <script type="text/javascript"> 
             openButton = document.getElementById("open");
-            closeButton = document.getElementById("close");
+            closeButton = document.getElementById("closed");
 
             function openPoll(){
                 openButton.style.display = "none";
@@ -43,7 +43,7 @@
             <?php
             
             $open = $_POST["open"];
-            $close = $_POST["close"];
+            $close = $_POST["closed"];
             $questionNumber = $_GET["number"];
             $dbServerName = "oceanus.cse.buffalo.edu";
             $dbUsername = "kchen223";
@@ -65,8 +65,8 @@
                     echo $row['question'];
                     if($row["open_closed"] = "open"){
                         echo '<script type="text/javascript">openPoll()</script>';
-                        if(isset($_POST["close"])){
-                            $sql = "UPDATE pollquestions SET status = 'closed' WHERE pollquestions . id = $questionNumber";
+                        if(isset($_POST["closed"])){
+                            $sql = "UPDATE pollquestions SET open_closed = 'closed' WHERE pollquestions . id = $questionNumber";
                             echo '<script type="text/javascript">closePoll()</script>';
                             $query_run = mysqli_query($conn, $sql);
                         }
@@ -74,7 +74,7 @@
                     if ($row["open_closed"] = "closed"){
                         echo '<script type="text/javascript">closePoll()</script>';
                         if(isset($_POST["open"])){
-                            $sql = "UPDATE pollquestions SET status = 'open' WHERE pollquestions . id = $questionNumber";
+                            $sql = "UPDATE pollquestions SET open_closed = 'open' WHERE pollquestions . id = $questionNumber";
                             echo '<script type="text/javascript">openPoll()</script>';
                             $query_run = mysqli_query($conn, $sql);
                         }
