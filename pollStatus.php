@@ -58,27 +58,26 @@
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error . "\n");
             }
-           
-            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE id = ? ");
-            $stmt -> bind_param("s", $questionNumber);
+            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE id = ?");
+            $stmt -> bind_param("i", $questionNumber);
             $status = $stmt -> execute();
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo $row['question'];
-                    if($row["open_closed"] = "open"){
+                    if($row["open_closed"] == "open"){
                         echo '<script type="text/javascript">openPoll()</script>';
                         if(isset($_POST["close"])){
-                            $sql = "UPDATE pollquestions SET open_closed = 'closed' WHERE pollquestions . id = $questionNumber";
+                            $sql = "UPDATE pollquestions SET open_closed = 'closed' WHERE pollquestions . id = '$questionNumber'";
                             echo '<script type="text/javascript">closePoll()</script>';
                             $query_run = mysqli_query($conn, $sql);
                         }
                     }
-                    if ($row["open_closed"] = "closed"){
+                    if ($row["open_closed"] == "closed"){
                         echo '<script type="text/javascript">closePoll()</script>';
                         if(isset($_POST["open"])){
-                            $sql = "UPDATE pollquestions SET open_closed = 'open' WHERE pollquestions . id = $questionNumber";
+                            $sql = "UPDATE pollquestions SET open_closed = 'open' WHERE pollquestions . id = '$questionNumber'";
                             echo '<script type="text/javascript">openPoll()</script>';
                             $query_run = mysqli_query($conn, $sql);
                         }
