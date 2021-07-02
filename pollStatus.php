@@ -39,6 +39,10 @@
                 document.getElementById("statusMsg").innerHTML = 'Status: The poll is closed'
 
             }
+            function closeBoth(){
+                    openButton.style.display = "none";
+                    closeButton.style.display = "none";
+            }
             </script>
             <?php
             
@@ -82,7 +86,7 @@
                 }
             }
             else {
-                echo '<script src="main.js" async defer></script> <script type="text/javascript">hideButtons()</script>';
+                echo '<script type="text/javascript">closeBoth()</script>';
                 echo "<h4 class='m-3'>There are no questions with that number.</h4> \n";
                 
             }
