@@ -71,8 +71,9 @@
                             //send to kevin's page
                         }
                         if(htmlspecialchars($row["instructor_student"]) == "student"){
+                            $class = $_POST["class"];
                             ?>
-                            <form action="courseContent.php" method="post">
+                            <form action="courseContent.php">
                                     <button type= "submit" name = "class" id = "<?php echo $row["course"] ?>" class="btn btn-outline-primary btn-lg m-2" 
                                         value = 
                                             "<?php echo $row["course"]?>"> 
