@@ -13,35 +13,36 @@
               
         <div class="mx-auto" style="text-align: left;">
             <?php
-
-                $pollAnswer = $_GET["answer"];
-                $pollAnswer2 = $_GET["answer"];
-
+                
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
                 $dbName = "kchen223_db";
-
+                
                 $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                $course = htmlspecialchars($_REQUEST['course']);
-                $question = htmlspecialchars($_REQUEST['question']);
-                $answers1 = htmlspecialchars($_REQUEST['answer1']);
-                $answers2 = htmlspecialchars($_REQUEST['answer2']);
-                $answers3 = htmlspecialchars($_REQUEST['answer3']);
-                $answers4 = htmlspecialchars($_REQUEST['answer4']);
-                $answers5 = htmlspecialchars($_REQUEST['answer5']);
-                $status = htmlspecialchars("open");
-                
+                $question = mysqli_real_escape_string($conn, $_REQUEST['question']);
+                $answers1 = mysqli_real_escape_string($conn, $_REQUEST['answer1']);
+                $answers2 = mysqli_real_escape_string($conn, $_REQUEST['answer2']);
+                $answers3 = mysqli_real_escape_string($conn, $_REQUEST['answer3']);
+                $answers4 = mysqli_real_escape_string($conn, $_REQUEST['answer4']);
+                $answers5 = mysqli_real_escape_string($conn, $_REQUEST['answer5']);
+                $status = mysqli_real_escape_string($conn, "open");
+
+                $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
+                VALUES (?,?,?,?,?,?,?)");
+
+                $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
                 if(!empty($question) || !empty($answer1)){
-                    $stmt = $conn->prepare("INSERT INTO pollquestions (course, question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
-                    VALUES (?,?,?,?,?,?,?,?)");
-                    $stmt->bind_param("ssssssss", $course, $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+                    $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
+                    VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
+                    // $conn->query($sql);
                 }else{
                     ;
                 }
@@ -53,7 +54,7 @@
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         echo "<h4 class='m-3'>" . "Class " . $row["course"] . "</h4>" . "\n";
-                        echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
+                        echo "<h4 class='m-3'>" . "Question ". $row["id"] . ": ". $row["question"] . "</h4>" . "\n";
                         echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
                         if($row["answer_choice2"]){
                             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
