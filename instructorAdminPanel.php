@@ -27,12 +27,14 @@
                     die("Connection failed: " . $conn->connect_error . "<br>");
                 }
                 $class = $_POST["class"];
+                $sql = "SELECT id, question FROM pollquestions where COURSE = '$class'";
+                $result = $conn->query($sql);
                 echo "<h1 class='m-3'>Dashboard for " . $class . " </h1>";
                 ?>
-                    <form method="post" action="instructorAdminFBPanel.php"> 
+                    <form action="instructorAdminFBPanel.php"> 
                         <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
                             value = 
-                                $class> 
+                                "<?php echo $class ?>"> 
                                 Enter FeedBack Config
                         </button>
                     </form>
@@ -53,8 +55,6 @@
                     </form>
                 <?php
                 echo '<br>'; echo '<br>';
-                $sql = "SELECT id, question FROM pollquestions where COURSE = '$class'";
-                $result = $conn->query($sql);
 
                 if ($result -> num_rows > 0) {
                     while($row = $result->fetch_assoc()) {

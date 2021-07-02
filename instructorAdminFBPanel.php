@@ -35,11 +35,16 @@
                     closeButton.style.display = "none";
                     document.getElementById("statusMsg").innerHTML = 'Status: The Feedback is closed'
                 }
+                function closeBoth(){
+                    openButton.style.display = "none";
+                    closeButton.style.display = "none";
+                    document.getElementById("statusMsg").innerHTML = 'Status: You are not teaching this course'
+                }
             </script>
             <?php
                 $open = $_POST["open"];
                 $close = $_POST["close"];
-                $class = $_POST["class"];
+                $class = $_GET["class"];
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
@@ -50,31 +55,27 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
             
-                // $stmt = $conn ->prepare("SELECT * FROM feedbackstatus WHERE course = ?");
-                // $stmt -> bind_param("s", $class);
-                // $status = $stmt -> execute();
-                // $result = $stmt->get_result();
-                $stmt = $conn ->prepare("SELECT * FROM feedbackstatus where course = '$class'");
-                // $stmt -> bind_param("s", $class);
+                $stmt = $conn ->prepare("SELECT * FROM feedbackstatus where course = ?");
+                $stmt -> bind_param("s", $class);
                 $status = $stmt -> execute();
                 $result = $stmt->get_result();
+
+                // $sql = "SELECT * FROM `feedbackstatus` WHERE `course` = '$class'";
+                // $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         if($row["open_closed"] = "open"){
-                            echo "This is open";
                             echo '<script type="text/javascript">openFB()</script>';
                             if(isset($_POST["close"])){
-                    
-                                $sql = "UPDATE feedbackstatus SET open_closed = 'closed' WHERE course = '$class'";
+                                $sql = "UPDATE feedbackstatus SET open_closed = 'closed' WHERE feedbackstatus . course = '$class'";
                                 echo '<script type="text/javascript">closeFB()</script>';
                                 $query_run = mysqli_query($conn, $sql);
                             }
                         }
-                        elseif ($row["open_closed"] = "closed"){
-                            echo "This is closed";
+                        if ($row["open_closed"] = "closed"){
                             echo '<script type="text/javascript">closeFB()</script>';
                             if(isset($_POST["open"])){
-                                $sql = "UPDATE feedbackstatus SET open_closed = 'open' WHERE course = '$class'";
+                                $sql = "UPDATE feedbackstatus SET open_closed = 'open' WHERE feedbackstatus . course = '$class'";
                                 echo '<script type="text/javascript">openFB()</script>';
                                 $query_run = mysqli_query($conn, $sql);
                             }
@@ -82,7 +83,9 @@
                     }
                 }
                 else{
-                    echo"I am so confused";
+                    // this part should never happen but just in case
+                    echo '<script type="text/javascript">closeBoth()</script>';
+                    echo"You are not teaching class $class";
                 }
             ?>
         </div>
