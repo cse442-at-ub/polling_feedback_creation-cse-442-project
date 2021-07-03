@@ -29,12 +29,12 @@
                             }
                             // echo "Connected successfully." . "\n";
 
-                            $sql = "SELECT pollAnswer, count(*) as NUM FROM poll GROUP BY pollAnswer";
+                            $sql = "SELECT response, count(*) as NUM FROM pollresponses GROUP BY response";
 
                             $result = mysqli_query($conn, $sql) or die("Bad Query: $sql");
                             
                             while($row = mysqli_fetch_array($result)){
-                                echo"<p class='h3' style='text-align:center'>{$row['pollAnswer']}: {$row['NUM']}</p><br>";
+                                echo"<p class='h3' style='text-align:center'>{$row['response']}: {$row['NUM']}</p><br>";
                             }
 
                             $conn->close();

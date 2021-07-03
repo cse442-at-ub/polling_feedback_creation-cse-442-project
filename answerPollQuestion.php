@@ -42,8 +42,8 @@
             }
 
             // $sql = "SELECT * FROM pollquestions";
-            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE question_number = ? ");
-            $stmt -> bind_param("s", $questionNumber);
+            $stmt = $conn ->prepare("SELECT * FROM pollquestions WHERE id = ?");
+            $stmt -> bind_param("i", $questionNumber);
             $status = $stmt -> execute();
             
             $result = $stmt->get_result();
@@ -52,7 +52,7 @@
                 while ($row = $result->fetch_assoc()) {
                     if ($row['status'] == 'open'){
                         echo"<p class='h3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>";
-                        echo "<h4 class='m-3' style = 'text-align:center; text-decoration:underline;'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
+                        echo "<h4 class='m-3' style = 'text-align:center; text-decoration:underline;'>" . "Question ". $row["id"] . ": ". $row["question"] . "</h4>" . "\n";
                         
                         if($row["answer_choice1"]){
                             ?>
