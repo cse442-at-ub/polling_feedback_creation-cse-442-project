@@ -13,7 +13,10 @@
               
         <div class="mx-auto" style="text-align: left;">
             <?php
-                
+
+                $pollAnswer = $_GET["answer"];
+                $pollAnswer2 = $_GET["answer"];
+
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
@@ -24,20 +27,23 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                $question = mysqli_real_escape_string($conn, $_REQUEST['question']);
-                $answers1 = mysqli_real_escape_string($conn, $_REQUEST['answer1']);
-                $answers2 = mysqli_real_escape_string($conn, $_REQUEST['answer2']);
-                $answers3 = mysqli_real_escape_string($conn, $_REQUEST['answer3']);
-                $answers4 = mysqli_real_escape_string($conn, $_REQUEST['answer4']);
-                $answers5 = mysqli_real_escape_string($conn, $_REQUEST['answer5']);
-                $status = mysqli_real_escape_string($conn, "open");
+                
 
                 $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
                 VALUES (?,?,?,?,?,?,?)");
 
                 $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
-                $stmt->execute();
+                // if(!empty($question) || !empty($answer1)){
+                    $stmt->execute();
+                // }
                 $result = $stmt->get_result();
+                $question = htmlspecialchars($_REQUEST['question']);
+                $answers1 = htmlspecialchars($_REQUEST['answer1']);
+                $answers2 = htmlspecialchars($_REQUEST['answer2']);
+                $answers3 = htmlspecialchars($_REQUEST['answer3']);
+                $answers4 = htmlspecialchars($_REQUEST['answer4']);
+                $answers5 = htmlspecialchars($_REQUEST['answer5']);
+                $status = htmlspecialchars("open");
 
                 if(!empty($question) || !empty($answer1)){
                     $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
@@ -46,7 +52,8 @@
                 }else{
                     ;
                 }
-
+                
+                
                 $sql = "SELECT * FROM pollquestions";
                 $result = $conn->query($sql);
                 
