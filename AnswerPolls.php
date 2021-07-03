@@ -24,25 +24,21 @@
                     die("Connection failed: " . $conn->connect_error . "\n");
                 }
                 
-                $question = mysqli_real_escape_string($conn, $_REQUEST['question']);
-                $answers1 = mysqli_real_escape_string($conn, $_REQUEST['answer1']);
-                $answers2 = mysqli_real_escape_string($conn, $_REQUEST['answer2']);
-                $answers3 = mysqli_real_escape_string($conn, $_REQUEST['answer3']);
-                $answers4 = mysqli_real_escape_string($conn, $_REQUEST['answer4']);
-                $answers5 = mysqli_real_escape_string($conn, $_REQUEST['answer5']);
-                $status = mysqli_real_escape_string($conn, "open");
-
-                $stmt = $conn->prepare("INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, status)
-                VALUES (?,?,?,?,?,?,?)");
-
-                $stmt->bind_param("sssssss", $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
+                $course = htmlspecialchars($_REQUEST['course']);
+                $question = htmlspecialchars($_REQUEST['question']);
+                $answers1 = htmlspecialchars($_REQUEST['answer1']);
+                $answers2 = htmlspecialchars($_REQUEST['answer2']);
+                $answers3 = htmlspecialchars($_REQUEST['answer3']);
+                $answers4 = htmlspecialchars($_REQUEST['answer4']);
+                $answers5 = htmlspecialchars($_REQUEST['answer5']);
+                $status = htmlspecialchars("open");
+                
                 if(!empty($question) || !empty($answer1)){
-                    $sql = "INSERT INTO pollquestions (question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5,status) 
-                    VALUES ('$question', '$answers1', '$answers2', '$answers3', '$answers4', '$answers5', '$status')";
-                    // $conn->query($sql);
+                    $stmt = $conn->prepare("INSERT INTO pollquestions (course, question, answer_choice1, answer_choice2, answer_choice3, answer_choice4, answer_choice5, open_closed)
+                    VALUES (?,?,?,?,?,?,?,?)");
+                    $stmt->bind_param("ssssssss", $course, $question, $answers1, $answers2, $answers3, $answers4, $answers5, $status);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
                 }else{
                     ;
                 }
