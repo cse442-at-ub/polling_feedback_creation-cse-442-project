@@ -22,7 +22,7 @@ function update_feedback() {
         die("Empty UBIT. Aborting query.");
     }
     
-    if ($score == 1 || $score == 2 || $score == 3) {
+    if ($score == 0 || $score == 5 || $score == 10) {
         echo "Valid entry provided: " . $score . "<br>";
         $stmt = $conn->prepare("INSERT INTO feedback (ubit, course, feedback_score) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE score = ?");
         $stmt->bind_param('ssii', $ubit, $course, $score, $score);
