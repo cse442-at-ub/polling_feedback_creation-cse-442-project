@@ -13,12 +13,10 @@ function update_poll_answer() {
 
     $poll_answer = mysqli_real_escape_string($conn, $_GET["answer"]);
     $question_id = mysqli_real_escape_string($conn, $_GET["id"]);
+    $course = mysqli_real_escape_string($conn, $_GET["course"]);
 
     if(isset($_COOKIE['ubit'])) {
         $ubit = mysqli_real_escape_string($conn, $_COOKIE['ubit']);
-    }
-    if(isset($_COOKIE['course'])) {
-        $course = mysqli_real_escape_string($conn, $_COOKIE['course']);
     }
     
     $stmt = $conn->prepare("INSERT INTO pollresponses (ubit, course, question_id, response) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE response = ?");
