@@ -49,6 +49,7 @@
             $open = $_POST["open"];
             $close = $_POST["close"];
             $questionNumber = $_GET["number"];
+            $class = $_GET["class"];
             $dbServerName = "oceanus.cse.buffalo.edu";
             $dbUsername = "kchen223";
             $dbPassword = "50277192";
@@ -82,6 +83,19 @@
                             $query_run = mysqli_query($conn, $sql);
                         }
                     }
+                    $questionNumber = $_POST["number"];
+                    ?>
+                    <form action="pollResults.php"> 
+                    <div class="mx-auto" style="width: 50%; text-align: center;">
+                                <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
+                                    value = 
+                                        "<?php echo $row["course"]?>"> 
+                                        View Poll Results
+                                </button>
+                                <input type="hidden" name="number" value="<?php echo $_GET['number']?>">
+
+                            </div>
+                    </form> <?php
                 }
             }
             else {
@@ -89,8 +103,8 @@
                 echo "<h4 class='m-3'>There are no questions with that number.</h4> \n";
                 
             }
-        
             ?>
+        
             <br><br>
             <p style = "text-align: center;" class="h3" id = "responseString"></p>
             <div class="mx-auto" style="text-align: center;">
