@@ -47,8 +47,8 @@
                         if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count2 == 0){
                             ?>
                             <h4 class='m-3'>Click the button below to set up a new course</h4>
-                            <form action="setupCourse.php"> 
-                                <button type= "submit" name="number" id="number" class ="btn btn-outline-primary btn-lg m-2" 
+                            <form action="setupCourse.html"> 
+                                <button type= "submit" class ="btn btn-outline-primary btn-lg m-2" 
                                 value = 
                                 "New Course Setup"> 
                                 Setup New Course    
