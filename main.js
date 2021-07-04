@@ -11,7 +11,7 @@ function sendScore(current) {
     ubit = getCookie('ubit');
 
     let xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("GET","updateFeedback.php?score=" + score.value + "&ubit=" + ubit, true);
+    xmlhttp.open("GET",`updateFeedback.php?score=${score.value}&ubit=${ubit}`, true);
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4) {
@@ -20,7 +20,7 @@ function sendScore(current) {
                 sendNotification(score.innerHTML);
             } else {
                 console.log('Request failed.');
-                document.getElementById('notification').innerHTML = "<p class='text-danger'>Feedback could not be submitted.</p>"
+                document.getElementById('feedback_notification').innerHTML = "<p class='text-danger'>Feedback could not be submitted.</p>"
             }
         }
     }
@@ -33,12 +33,13 @@ function sendPoll(current) {
     }
     pollAnswer = current;
     pollAnswer.classList.add('active');
-    responseString = document.getElementById("response_string");
+    responseString = document.getElementById("poll_success");
     responseString.innerHTML = "<h5 class='text-center'>Your answer of " + current.value.toString() + " has been saved.</h5>";
     // Send pollAnswer to DB
-    question_id = document.getElementById("question_id");
+    let question_id = document.getElementById("question_id");
+    let course_name = encodeURIComponent(document.getElementById('course_name').innerHTML);
     let xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("GET","submitPoll.php?answer=" + current.value + "&id=" + question_id.value, true);
+    xmlhttp.open("GET",`submitPoll.php?course=${course_name}&answer=${current.value}&id=${question_id.value}`, true);
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4) {
@@ -53,15 +54,17 @@ function sendPoll(current) {
 }
 
 function feedbackNotification(score) {
+    let feedback_notification = document.getElementById('feedback_notification');
     if (score == undefined || score == "") {
-        document.getElementById('notification').innerHTML = "<p class='text-danger'>No response received.</p>";
+        feedback_notification.innerHTML = "<p class='text-danger'>No response received.</p>";
     } else if (score == "I'm lost." || score == "Just right." || score == "This is easy.") {
-        document.getElementById('notification').innerHTML = "<p class='text-success'>Your feedback has been submitted! </p>" + "<b>" + score + "</b>"
+        feedback_notification.innerHTML = "<p class='text-success'>Your feedback has been submitted! </p>" + "<b>" + score + "</b>"
     } else {
-        document.getElementById('notification').innerHTML = "<p class='text-danger'>Invalid feedback option: </p>" + "<b>" + score + "</b>";
+        feedback_notification.innerHTML = "<p class='text-danger'>Invalid feedback option: </p>" + "<b>" + score + "</b>";
     }
 }
 
+// Source: https://www.w3schools.com/js/js_cookies.asp
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -79,20 +82,17 @@ function getCookie(cname) {
 }
 
 function checkCourseStatus() {
-    // console.log(document.cookie);
-    console.log(getCookie('course'));
-    let currentCourse = encodeURIComponent(getCookie("course"));
-    // console.log(currentCourse);
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",`courseStatus.php?course=${currentCourse}`, true);
+    let course_name = encodeURIComponent(document.getElementById('course_name').innerHTML);
 
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET",`courseStatus.php?course=${course_name}`, true);
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4) {
             if (xmlhttp.status === 200) {
                 console.log('Request successful.');
-                let courseData = JSON.parse(xmlhttp.responseText);
-                console.log(courseData);
-                populateWindow(courseData);
+                let course_data = JSON.parse(xmlhttp.responseText);
+                parseData(course_data);
+                console.log(course_data);
             } else {
                 console.log('Request failed.');
             }
@@ -101,93 +101,81 @@ function checkCourseStatus() {
     xmlhttp.send();
 }
 
-function populateWindow(data) {
+function parseData(data) {
     let poll_status = data['poll_status'];
     let feedback_status = data['feedback_status'];
+    
+    let class_inactive = document.getElementById('class_inactive');
+    let poll = document.getElementById('poll');
+    let feedback = document.getElementById('feedback');
 
-    let feedback_node = document.getElementById('feedback');
-    let poll_node = document.getElementById('poll');
-    let inactive_node = document.getElementById('inactive');
-    let instruction_node = document.getElementById('instruction');
-    let id_node = document.getElementById('question_id');
-    let response_node = document.getElementById('response_string');
-
-    if (poll_status == true) {
-        let question = data['question'];
-        let question_id = data['question_id'];
-        document.getElementById('question').innerHTML = question;
-        id_node.value = question_id;
-        for (let i = 0; i < data['choices'].length ; i++) {
-            let choice = data['choices'][i];
-            document.getElementById(`choice${i+1}`).innerHTML = `<button class ="btn btn-outline-primary btn-lg m-2" value="${choice}" onclick=sendPoll(this)>${choice}</button>`
-        }
+    // Feedback open but poll closed
+    if (feedback_status == true && poll_status == false) {
+        hideClassInactive(class_inactive);
+        showFeedback(feedback);
+        hidePoll(poll);
     }
-
-    if (poll_status != feedback_status) {
-        // feedback open but poll closed
-        if (feedback_status == true && poll_status == false) {
-            inactive_node.textContent = '';
-            feedback_node.style.display = 'block';
-            poll_node.style.display = 'none';
-            instruction_node.style.display = 'none';
-            response_node.textContent = '';
-        }
-        // feedback closed but poll open
-        if (feedback_status == false && poll_status == true) {
-            inactive_node.textContent = '';
-            feedback_node.style.display = 'none';
-            poll_node.style.display = 'block';
-            instruction_node.style.display = 'block';
-        }
-    } 
-    // default to poll question if both are open
+    // Feedback closed but poll open
+    else if (feedback_status == false && poll_status == true) {
+        hideClassInactive(class_inactive);
+        hideFeedback(feedback);
+        populatePoll(data);
+        showPoll(poll);
+    }
+    // Default to poll question if both are open
     else if (poll_status == true && feedback_status == true) {
-        inactive_node.textContent = '';
-        feedback_node.style.display = 'none';
-        poll_node.style.display = 'block';
-        instruction_node.style.display = 'block';
+        hideClassInactive(class_inactive);
+        hideFeedback(feedback);
+        populatePoll(data);
+        showPoll(poll);
     } 
-    // show class is not active message if both are closed
+    // Show class is not active message if both are closed
     else if (poll_status == false && feedback_status == false) {
-        feedback_node.style.display = 'none';
-        poll_node.style.display = 'none';
-        inactive_node.style.display = 'block';
-        inactive_node.textContent = 'Class is not active. Please wait for the instructor to open the class.';
-        response_node.textContent = '';
+        hideFeedback(feedback);
+        hidePoll(poll);
+        showClassInactive(class_inactive);
     }
 }
 
-function updatefeedback(status) {
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",`toggleFeedback.php?feedback=${status}`, true);
-
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status === 200) {
-                console.log('Request successful.');
-            } else {
-                console.log('Request failed.');
-            }
-        }
+function populatePoll(data) {
+    let question = data['question'];
+    let question_id = data['question_id'];
+    document.getElementById('question').innerHTML = question;
+    document.getElementById('question_id').value = question_id;
+    for (let i = 0; i < data['choices'].length ; i++) {
+        let choice = data['choices'][i];
+        let choice_button = document.getElementById(`choice${i+1}`);
+        choice_button.innerHTML = createChoiceButton(choice);
     }
-    xmlhttp.send();
-} 
+}
 
-function updatepoll(status) {
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET",`togglePoll.php?poll=${status}`, true);
+function createChoiceButton(choice) {
+    return `<button class ="btn btn-outline-primary btn-lg m-2" value="${choice}" onclick=sendPoll(this)>${choice}</button>`
+}
 
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status === 200) {
-                console.log('Request successful.');
-            } else {
-                console.log('Request failed.');
-            }
-        }
-    }
-    xmlhttp.send();
-} 
+function showFeedback(feedback) {
+    feedback.style.display = 'block';
+}
+
+function hideFeedback(feedback) {
+    feedback.style.display = 'none';
+}
+
+function showPoll(poll) {
+    poll.style.display = 'block';
+}
+
+function hidePoll(poll) {
+    poll.style.display = 'none';   
+}
+
+function showClassInactive(class_inactive) {
+    class_inactive.style.display = 'block';
+}
+
+function hideClassInactive(class_inactive) {
+    class_inactive.style.display = 'none';
+}
 
 window.onload = function() {
     checkCourseStatus();

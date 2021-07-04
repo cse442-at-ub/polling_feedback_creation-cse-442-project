@@ -13,23 +13,11 @@
     <body>
         <div class="mx-auto text-center">
             <?php
-            // Hard coding course cookie; connect with login page later
-            $course_key = "course";
-            $course_value = "CSE 442";
-            setcookie($course_key, $course_value, time() + (86400 * 30), "/");
-            $ubit_key = "ubit";
-            $ubit_value = "kchen223";
-            setcookie($ubit_key, $ubit_value, time() + (86400 * 30), "/");
-            // Checking for course cookie
-            if(isset($_COOKIE['course'])) {
-                echo "<h1 class='m-3 text-center'>" . htmlspecialchars($_COOKIE['course']) . "</h1>";
-            }
+                $course = $_GET["class"];
+                echo "<h1 id='course_name' class='m-3 text-center'>" . htmlspecialchars($course) . "</h1>";
             ?>
-            <button onclick="updatefeedback('open')">Open feedback</button>
-            <button onclick="updatefeedback('closed')">Close feedback</button>
-            <button onclick="updatepoll('open')">Open poll</button>
-            <button onclick="updatepoll('closed')">Close poll</button>
-            <h5 id="inactive" style="display: none;"></h5>
+            
+            <h5 id="class_inactive" style="display: none;">Class is not active. Please wait for the instructor to open the class.</h5>
             <div id="poll" style="display: none;">
                 <h2 id="question"></h2>
                 <input id="question_id" type="hidden" value="">
@@ -38,17 +26,16 @@
                 <div id="choice3"></div>
                 <div id="choice4"></div>
                 <div id="choice5"></div>
-                <p id="instruction" class='m-3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>
+                <p id="poll_instruction" class='m-3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>
+                <div id="poll_success" class="text-success m-3"></div>
             </div>
             <div class="mx-auto" style="width: 50%; text-align: center; display: none;" id="feedback">
                 <h5 class="m-3">How are you understanding the material?</h5>
-                <button type="button" class="btn btn-outline-danger btn-lg m-2" value="1" onclick=sendScore(this)>I'm lost.</button>
-                <button type="button" class="btn btn-outline-primary btn-lg m-2" value="2" onclick=sendScore(this)>Just right.</button>
-                <button type="button" class="btn btn-outline-success btn-lg m-2" value="3" onclick=sendScore(this)>This is easy.</button>
-                <h4 id="notification" class="m-3">
+                <button type="button" class="btn btn-outline-danger btn-lg m-2" value="0" onclick=sendScore(this)>I'm lost.</button>
+                <button type="button" class="btn btn-outline-primary btn-lg m-2" value="5" onclick=sendScore(this)>Just right.</button>
+                <button type="button" class="btn btn-outline-success btn-lg m-2" value="10" onclick=sendScore(this)>This is easy.</button>
+                <h4 id="feedback_notification" class="m-3">
             </div>
-
-            <div id="response_string" class="text-success m-3"></div>
         </div>
     </body>
 </html>
