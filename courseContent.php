@@ -28,9 +28,12 @@
                 <div id="choice5"></div>
                 <p id="poll_instruction" class='m-3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>
                 <div id="poll_success" class="text-success m-3"></div>
+                <input id="poll_status" type="hidden" value="false"></input>
+            </div>
+            <div id="poll_results">
             </div>
             <div class="mx-auto" style="width: 50%; text-align: center; display: none;" id="feedback">
-                <h5 class="m-3">How are you understanding the material?</h5>
+                <h2 class="m-3">How are you understanding the material?</h2>
                 <button type="button" class="btn btn-outline-danger btn-lg m-2" value="0" onclick=sendScore(this)>I'm lost.</button>
                 <button type="button" class="btn btn-outline-primary btn-lg m-2" value="5" onclick=sendScore(this)>Just right.</button>
                 <button type="button" class="btn btn-outline-success btn-lg m-2" value="10" onclick=sendScore(this)>This is easy.</button>
