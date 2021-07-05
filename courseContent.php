@@ -13,7 +13,7 @@
     <body>
         <div class="mx-auto text-center">
             <?php
-                $course = mysqli_real_escape_string($_GET["class"]);
+                $course = $_GET["class"];
                 echo "<h1 id='course_name' class='m-3 text-center'>" . htmlspecialchars($course) . "</h1>";
             ?>
             
