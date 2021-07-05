@@ -22,19 +22,21 @@
                             $dbName = "kchen223_db";
 
                             $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
-                            $class = $_GET["class"];
-                            $questionNumber = $_REQUEST["number"];
+                            $course = urldecode(mysqli_real_escape_string($conn, $_GET['class']));
+                            $question_id = mysqli_real_escape_string($conn, $_GET['number']);
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error . "\n");
                             }
                             // echo "Connected successfully." . "\n";
 
-                            $sql = "SELECT response, count(*) as NUM FROM pollresponses WHERE course = '$class' AND question_id = '$questionNumber' GROUP BY response";
-
-                            $result = mysqli_query($conn, $sql) or die("Bad Query: $sql");
-                            
-                            while($row = mysqli_fetch_array($result)){
-                                echo"<p class='h3' style='text-align:center'>{$row['response']}: {$row['NUM']}</p><br>";
+                            $stmt = $conn->prepare("SELECT response, count(*) as NUM FROM pollresponses WHERE course = ? AND question_id = ? GROUP BY response");
+                            $stmt->bind_param('si', $course, $question_id);
+                        
+                            if ($stmt->execute()) {
+                                $result = $stmt->get_result();
+                                while($row = mysqli_fetch_array($result)){
+                                    echo"<p class='h3' style='text-align:center'>{$row['response']}: {$row['NUM']}</p><br>";
+                                }
                             }
                             $conn->close();
                         ?>
