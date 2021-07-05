@@ -96,7 +96,6 @@ function parseData(data) {
     let feedback = document.getElementById('feedback');
     let poll_results = document.getElementById('poll_results');
     let poll_success = document.getElementById('poll_success');
-    let feedback_notif = document.getElementById('feedback_notification');
     
     // Feedback open but poll closed
     if (feedback_status == true && poll_status == false) {
@@ -104,7 +103,6 @@ function parseData(data) {
         hideElement(poll);
         hideElement(class_inactive);
         detectPollChange(poll_status);
-        hideElement(poll_results);
         resetTextElement(poll_success);
     }
     // Feedback closed but poll open
@@ -132,6 +130,7 @@ function parseData(data) {
         showElement(class_inactive);
         detectPollChange(poll_status);
         resetTextElement(poll_success);
+        removeAllChildNodes(poll_results);
     }
 }
 
