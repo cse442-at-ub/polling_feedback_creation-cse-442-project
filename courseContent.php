@@ -13,7 +13,7 @@
     <body>
         <div class="mx-auto text-center">
             <?php
-                $course = mysqli_real_escape_string($_GET["class"]);
+                $course = $_GET["class"];
                 echo "<h1 id='course_name' class='m-3 text-center'>" . htmlspecialchars($course) . "</h1>";
             ?>
             
@@ -26,7 +26,7 @@
                 <div id="choice3"></div>
                 <div id="choice4"></div>
                 <div id="choice5"></div>
-                <p id="poll_instruction" class='m-3 text-muted'>The poll is open. The poll will end when the instructor closes it.</p>
+                <p id="poll_instruction" class='m-3' style='text-align:center'>The poll is open. The poll will end when the instructor closes it.</p>
                 <div id="poll_success" class="text-success m-3"></div>
                 <input id="poll_status" type="hidden" value="false"></input>
             </div>
