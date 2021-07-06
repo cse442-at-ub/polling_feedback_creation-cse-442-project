@@ -35,7 +35,6 @@
                         //for instructors
                         if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
-                            echo "<h4 class='m-3'>Here are the courses you are currently teaching. </h4>";
                             
                             $ubit_key = "ubit";
                             $ubit_value = str_replace("@buffalo.edu","",$row["email"]);
@@ -57,6 +56,7 @@
                         <br>
                         <?php
                             $count2 += 1;
+                            echo "<h4 class='m-3'>Here are the courses you are currently teaching. </h4>";
                             echo '<i>Click the button corresonding to your class you want to access to enter your instructor dashboard</i>';
                         }
                         if(htmlspecialchars($row["instructor_student"]) == "instructor"){
