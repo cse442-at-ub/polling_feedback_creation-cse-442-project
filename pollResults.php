@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> student-question-feedback
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -38,8 +34,12 @@
                         
                             if ($stmt->execute()) {
                                 $result = $stmt->get_result();
-                                while($row = mysqli_fetch_array($result)){
-                                    echo"<p class='h3' style='text-align:center'>{$row['response']}: {$row['NUM']}</p><br>";
+                                if ($result->num_rows >= 1) {
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo"<p class='h3' style='text-align:center'>{$row['response']}: {$row['NUM']}</p><br>";
+                                    }
+                                } else if ($result->num_rows == 0) {
+                                    echo "<p class='h3' style='text-align:center'>No responses.</p>";
                                 }
                             }
                             $conn->close();
