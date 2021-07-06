@@ -47,33 +47,26 @@
                 }
                 
                 
-                // $sql = "SELECT * FROM pollquestions";
-                // $result = $conn->query($sql);
+                $sql = "SELECT * FROM pollquestions";
+                $result = $conn->query($sql);
                 
-                // if ($result->num_rows > 0) {
-                //     while($row = $result->fetch_assoc()) {
-                //         echo "<h4 class='m-3'>" . "Class " . $row["course"] . "</h4>" . "\n";
-                //         echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
-                //         echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
-                //         if($row["answer_choice2"]){
-                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
-                //         }
-                //         if($row["answer_choice3"]){
-                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice3"] . "</h5>" . "\n";
-                //         }
-                //         if($row["answer_choice4"]){
-                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice4"] . "</h5>" . "\n";
-                //         }
-                //         if($row["answer_choice5"]){
-                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice5"] . "</h5>" . "\n";
-                //         }
-                //         echo "\n";
-                //     }
-                // } else {
-                //     echo "<h4 class='m-3'>There are no questions currently in the database.</h4> \n";
-                // }
+                echo "<h4 class='m-3'>" . "Class: " . $course . "</h4>" . "\n";
 
-                // header("Location: pollQuestion.html");
+                echo "<h5 class='m-3'>" . "Answer Choice: " . $answers1 . "</h5>" . "\n";
+                if($answers2 != ""){
+                    echo "<h5 class='m-3'>" . "Answer Choice: " . $answers2 . "</h5>" . "\n";
+                }
+                if($answers3 != ""){
+                    echo "<h5 class='m-3'>" . "Answer Choice: " . $answers3 . "</h5>" . "\n";
+                }
+                if($answers4 != ""){
+                    echo "<h5 class='m-3'>" . "Answer Choice: " . $answers4 . "</h5>" . "\n";
+                }
+                if($answers5 != ""){
+                    echo "<h5 class='m-3'>" . "Answer Choice: " . $answers5 . "</h5>" . "\n";
+                }
+                echo "\n";
+
             ?>
         </div>
     </body>
