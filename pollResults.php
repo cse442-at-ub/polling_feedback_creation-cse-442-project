@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -23,20 +22,26 @@
                             $dbName = "kchen223_db";
 
                             $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
-
+                            $course = urldecode(mysqli_real_escape_string($conn, $_GET['class']));
+                            $question_id = mysqli_real_escape_string($conn, $_GET['number']);
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error . "\n");
                             }
                             // echo "Connected successfully." . "\n";
 
-                            $sql = "SELECT pollAnswer, count(*) as NUM FROM poll GROUP BY pollAnswer";
-
-                            $result = mysqli_query($conn, $sql) or die("Bad Query: $sql");
-                            
-                            while($row = mysqli_fetch_array($result)){
-                                echo"<p class='h3' style='text-align:center'>{$row['pollAnswer']}: {$row['NUM']}</p><br>";
+                            $stmt = $conn->prepare("SELECT response, count(*) as NUM FROM pollresponses WHERE course = ? AND question_id = ? GROUP BY response");
+                            $stmt->bind_param('si', $course, $question_id);
+                        
+                            if ($stmt->execute()) {
+                                $result = $stmt->get_result();
+                                if ($result->num_rows >= 1) {
+                                    while($row = mysqli_fetch_array($result)){
+                                        echo"<p class='h3' style='text-align:center'>{$row['response']}: {$row['NUM']}</p><br>";
+                                    }
+                                } else if ($result->num_rows == 0) {
+                                    echo "<p class='h3' style='text-align:center'>No responses.</p>";
+                                }
                             }
-
                             $conn->close();
                         ?>
       

@@ -1,25 +1,35 @@
 <?php
-$pollAnswer = $_GET["answer"];
-$pollAnswer2 = $_GET["answer"];
+function update_poll_answer() {
+    $dbServerName = "oceanus.cse.buffalo.edu";
+    $dbUsername = "kchen223";
+    $dbPassword = "50277192";
+    $dbName = "kchen223_db";
+    $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
 
-$dbServerName = "oceanus.cse.buffalo.edu";
-$dbUsername = "kchen223";
-$dbPassword = "50277192";
-$dbName = "kchen223_db";
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error . "\n");
+    }
+    echo "Connected successfully.\n";
 
-$conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
+    $poll_answer = mysqli_real_escape_string($conn, $_GET["answer"]);
+    $question_id = mysqli_real_escape_string($conn, $_GET["id"]);
+    $course = mysqli_real_escape_string($conn, $_GET["course"]);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error . "\n");
+    if(isset($_COOKIE['ubit'])) {
+        $ubit = mysqli_real_escape_string($conn, $_COOKIE['ubit']);
+    }
+    
+    $stmt = $conn->prepare("INSERT INTO pollresponses (ubit, course, question_id, response) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE response = ?");
+    $stmt->bind_param('ssiss', $ubit, $course, $question_id, $poll_answer, $poll_answer);
+    
+    if ($stmt->execute() === TRUE) {
+        echo "New record created successfully. \n";
+    } else {
+        echo "Error: " . $stmt . "\n" . $conn->error . "\n";
+    }
+    
+    $conn->close();
 }
-echo "Connected successfully." . "\n";
-$sql = "INSERT INTO poll (ubit, pollAnswer) VALUES ('kchen223', '$pollAnswer') ON DUPLICATE KEY UPDATE pollAnswer = '$pollAnswer2'";
 
-if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully. \n";
-} else {
-    echo "Error: " . $sql . "\n" . $conn->error . "\n";
-}
-
-$conn->close();
+update_poll_answer();
 ?>

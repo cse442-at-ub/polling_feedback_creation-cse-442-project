@@ -17,31 +17,30 @@
                 $dbUsername = "kchen223";
                 $dbPassword = "50277192";
                 $dbName = "kchen223_db";
-                
                 $conn = new mysqli($dbServerName, $dbUsername, $dbPassword, $dbName);
                 
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error . "<br>");
                 }
+                
+                $class = mysqli_real_escape_string($conn, $_GET['class']);
+                $stmt = $conn->prepare("SELECT AVG(feedback_score) FROM feedback WHERE timestamp > DATE_SUB(NOW(), INTERVAL 2 MINUTE) AND course = ?");
+                $stmt->bind_param('s', $class);
 
-                $sql = "SELECT AVG(score) FROM scores WHERE timestamp > DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
-                $result = $conn->query($sql);
-
-                if ($result->num_rows > 0) {
+                if ($stmt->execute() === TRUE) {
+                    $result = $stmt->get_result();
                     while($row = $result->fetch_assoc()) {
-                        $average = $row['AVG(score)'];
-                        if ($average == 0) {
+                        $average = $row['AVG(feedback_score)'];
+                        if ($average == NULL) {
                             echo "<h3>No recent submissions.</h3><br>";
                         } else {
                             echo "<h1>" . round($average, 1) . "<h1>";
                         }
                     }
                 } else {
-                    echo "No recent submissions. <br>";
+                    echo "An error has occurred. \n";
                 }
 
-                // echo "It is currently: " . date("Y-m-d H:m:s") . "<br>";
-                
                 header("Refresh:10");
                 
                 $conn->close();
