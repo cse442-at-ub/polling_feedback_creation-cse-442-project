@@ -46,10 +46,11 @@
                 
                 $sql = "SELECT * FROM pollquestions";
                 $result = $conn->query($sql);
-                
-                echo "<h4 class='m-3'>" . "Class " . $course . "</h4>" . "\n";
-                echo "<h4 class='m-3'>" . "Question: " . $question . "</h4>" . "\n";
-                echo "<h5 class='m-3'>" . "Answer Choice: " . $answers1 . "</h5>" . "\n";
+                if(($course && $question && $answers1) != "" ){
+                    echo "<h4 class='m-3'>" . "Class " . $course . "</h4>" . "\n";
+                    echo "<h4 class='m-3'>" . "Question: " . $question . "</h4>" . "\n";
+                    echo "<h5 class='m-3'>" . "Answer Choice: " . $answers1 . "</h5>" . "\n";
+                }
                 if($answers2 != ""){
                     echo "<h5 class='m-3'>" . "Answer Choice: " . $answers2 . "</h5>" . "\n";
                 }
