@@ -12,19 +12,17 @@ function update_feedback() {
     }
     echo "Connected to database." . "<br>";
     
-    $score = mysqli_real_escape_string($conn, $_GET['score']);
     $ubit = mysqli_real_escape_string($conn, $_GET['ubit']);
-    if (isset($_COOKIE['course'])) {
-        $course = mysqli_real_escape_string($conn, $_COOKIE['course']);
-    }
+    $course = mysqli_real_escape_string($conn, $_GET['course']);
+    $score = mysqli_real_escape_string($conn, $_GET['score']);
     
     if(empty($ubit)) {
         die("Empty UBIT. Aborting query.");
     }
     
-    if ($score == 1 || $score == 2 || $score == 3) {
+    if ($score == 0 || $score == 5 || $score == 10) {
         echo "Valid entry provided: " . $score . "<br>";
-        $stmt = $conn->prepare("INSERT INTO feedback (ubit, course, feedback_score) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE score = ?");
+        $stmt = $conn->prepare("INSERT INTO feedback (ubit, course, feedback_score) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE feedback_score = ?");
         $stmt->bind_param('ssii', $ubit, $course, $score, $score);
     
         if ($stmt->execute() === TRUE) {

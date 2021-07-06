@@ -9,7 +9,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
     <body>
-        <div class="mx-auto" style="text-align: left;">
+        <div class="mx-auto text-center">
             <?php 
                 $dbServerName = "oceanus.cse.buffalo.edu";
                 $dbUsername = "kchen223";
@@ -29,20 +29,35 @@
                 $result = $stmt->get_result();
 
                 $count = 0;
+                $count2 = 0;
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         //for instructors
                         if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count == 0){
                             echo "<h1 class='m-3'>Welcome back " . htmlspecialchars($row["instructor_student"]) . " </h1>";
                             echo "<h4 class='m-3'>Here are the courses you are currently teaching. </h4>";
-                            echo '<i>Click the button corresonding to your class you want to access to enter your instructor dashboard</i>';
-
+                            
                             $ubit_key = "ubit";
                             $ubit_value = str_replace("@buffalo.edu","",$row["email"]);
                             setcookie($ubit_key, $ubit_value, time() + (86400 * 30), "/"); 
                             setcookie("status","instructor", time() +(86400 * 30), "/");
                             $count += 1;
                             //send to alex's page
+                        }
+                        if(htmlspecialchars($row["instructor_student"]) == "instructor" && $count2 == 0){
+                            ?>
+                            <h4 class='m-3'>Click the button below to set up a new course</h4>
+                            <form action="setupCourse.html"> 
+                                <button type= "submit" class ="btn btn-outline-primary btn-lg m-2" 
+                                value = 
+                                "New Course Setup"> 
+                                Setup New Course    
+                            </button>
+                        </form>
+                        <br>
+                        <?php
+                            $count2 += 1;
+                            echo '<i>Click the button corresonding to your class you want to access to enter your instructor dashboard</i>';
                         }
                         if(htmlspecialchars($row["instructor_student"]) == "instructor"){
                             ?>
@@ -56,6 +71,7 @@
                             </form>
                             <?php
                         }
+
 
 
                         //for students

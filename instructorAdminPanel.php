@@ -46,7 +46,7 @@
                 echo '<i>Click the button above me to access FeedBack Config</i>';
                 echo '<br>'; echo '<br>';
                 ?>
-                <form method="post" action="pollQuestion.html"> 
+                <form method="post" action="pollCreation.html"> 
                         <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
                             value = 
                                 $class> 

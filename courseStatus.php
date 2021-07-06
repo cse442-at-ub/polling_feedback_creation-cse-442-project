@@ -19,12 +19,11 @@ function get_question_id($course, $conn) {
 
     if ($stmt->execute() === TRUE) {
         $result = $stmt->get_result();
-        if ($result->num_rows == 1) {
-            while($row = $result->fetch_assoc()) {
-                return $row['id'];
-            }
-        } else if ($result->num_rows > 1) {
-            echo "More than one poll question is open.";
+        if ($result->num_rows >= 1) {
+            $row = $result->fetch_assoc();
+            return $row['id'];
+        } else if ($result->num_rows == 0) {
+            echo "0 poll questions are open.\n";
         }
     }
     $conn->close;
@@ -66,12 +65,12 @@ function fetch_question($course, $conn) {
 
     if ($stmt->execute() === TRUE) {
         $result = $stmt->get_result();
-        if ($result->num_rows == 1) {
-            while($row = $result->fetch_assoc()) {
-                return $row['question'];
-            }
-        } else if ($result->num_rows > 1) {
-            echo "More than one poll question is open.";
+        if ($result->num_rows >= 1) {
+            $row = $result->fetch_assoc();
+            return $row['question'];
+        } 
+        else if ($result->num_rows == 0) {
+            echo "0 poll questions are open.\n";
         }
     }
     $conn->close;
@@ -82,18 +81,17 @@ function fetch_choices($course, $conn) {
     $stmt->bind_param('s', $course);
     if ($stmt->execute() === TRUE) {
         $result = $stmt->get_result();
-        if ($result->num_rows == 1) {
+        if ($result->num_rows >= 1) {
             $choices = [];
-            while($row = $result->fetch_assoc()) {
-                for ($i = 1; $i <= 5; $i++) {
-                    if ($row['answer_choice'.$i]) {
-                        $choices[] = $row['answer_choice'.$i];
-                    }
+            $row = $result->fetch_assoc();
+            for ($i = 1; $i <= 5; $i++) {
+                if ($row['answer_choice'.$i]) {
+                    $choices[] = $row['answer_choice'.$i];
                 }
             }
             return $choices;
-        } else if ($result->num_rows > 1) {
-            echo "More than one poll question is open.";
+        } else if ($result->num_rows == 0) {
+            echo "0 poll questions are open.\n";
         }
     }
     $conn->close;

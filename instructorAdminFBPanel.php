@@ -80,8 +80,19 @@
                                 $query_run = mysqli_query($conn, $sql);
                             }
                         }
+                    ?>
+                    <form action="FBScores.php"> 
+                    <div class="mx-auto" style="width: 50%; text-align: center;">
+                                <button type= "submit" name="class" id="class" class ="btn btn-outline-primary btn-lg m-2" 
+                                    value = 
+                                        "<?php echo $row["course"]?>"> 
+                                        View Feedback Scores
+                                </button>
+                            </div>
+                    </form> <?php
                     }
                 }
+                
                 else{
                     // this part should never happen but just in case
                     echo '<script type="text/javascript">closeBoth()</script>';

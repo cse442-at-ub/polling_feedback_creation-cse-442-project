@@ -9,7 +9,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     </head>
     <body>
-    <div class="alert alert-primary" style ="text-align: center;" role="alert"><h4>Questions and Answer Received!</h4> </div>
+    <div class="alert alert-primary" style ="text-align: center;" role="alert"><h4>Poll Questions and Answer Received!</h4> </div>
               
         <div class="mx-auto" style="text-align: left;">
             <?php
@@ -44,31 +44,31 @@
                 }
                 
                 
-                $sql = "SELECT * FROM pollquestions";
-                $result = $conn->query($sql);
+                // $sql = "SELECT * FROM pollquestions";
+                // $result = $conn->query($sql);
                 
-                if ($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()) {
-                        echo "<h4 class='m-3'>" . "Class " . $row["course"] . "</h4>" . "\n";
-                        echo "<h4 class='m-3'>" . "Question ". $row["id"] . ": ". $row["question"] . "</h4>" . "\n";
-                        echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
-                        if($row["answer_choice2"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
-                        }
-                        if($row["answer_choice3"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice3"] . "</h5>" . "\n";
-                        }
-                        if($row["answer_choice4"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice4"] . "</h5>" . "\n";
-                        }
-                        if($row["answer_choice5"]){
-                            echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice5"] . "</h5>" . "\n";
-                        }
-                        echo "\n";
-                    }
-                } else {
-                    echo "<h4 class='m-3'>There are no questions currently in the database.</h4> \n";
-                }
+                // if ($result->num_rows > 0) {
+                //     while($row = $result->fetch_assoc()) {
+                //         echo "<h4 class='m-3'>" . "Class " . $row["course"] . "</h4>" . "\n";
+                //         echo "<h4 class='m-3'>" . "Question ". $row["question_number"] . ": ". $row["question"] . "</h4>" . "\n";
+                //         echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice1"] . "</h5>" . "\n";
+                //         if($row["answer_choice2"]){
+                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice2"] . "</h5>" . "\n";
+                //         }
+                //         if($row["answer_choice3"]){
+                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice3"] . "</h5>" . "\n";
+                //         }
+                //         if($row["answer_choice4"]){
+                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice4"] . "</h5>" . "\n";
+                //         }
+                //         if($row["answer_choice5"]){
+                //             echo "<h5 class='m-3'>" . "Answer Choice: " . $row["answer_choice5"] . "</h5>" . "\n";
+                //         }
+                //         echo "\n";
+                //     }
+                // } else {
+                //     echo "<h4 class='m-3'>There are no questions currently in the database.</h4> \n";
+                // }
 
                 // header("Location: pollQuestion.html");
             ?>
